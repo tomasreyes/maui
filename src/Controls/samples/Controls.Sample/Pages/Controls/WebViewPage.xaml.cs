@@ -20,12 +20,14 @@ namespace Maui.Controls.Sample.Pages
 		{
 			MauiWebView.Navigating += OnMauiWebViewNavigating;
 			MauiWebView.Navigated += OnMauiWebViewNavigated;
+			MauiWebView.ProcessTerminated += OnMauiWebViewProcessTerminated;
 		}
 
 		protected override void OnDisappearing()
 		{
 			MauiWebView.Navigating -= OnMauiWebViewNavigating;
 			MauiWebView.Navigated -= OnMauiWebViewNavigated;
+			MauiWebView.ProcessTerminated -= OnMauiWebViewProcessTerminated;
 		}
 
 		void OnUpdateHtmlSourceClicked(object sender, EventArgs args)
@@ -74,6 +76,11 @@ namespace Maui.Controls.Sample.Pages
 		void OnMauiWebViewNavigated(object? sender, Microsoft.Maui.Controls.WebNavigatedEventArgs e)
 		{
 			Debug.WriteLine($"Navigated - Url: {e.Url}, Event: {e.NavigationEvent}, Result: {e.Result}");
+		}
+
+		void OnMauiWebViewProcessTerminated(object? sender, EventArgs e)
+		{
+			Debug.WriteLine("WebView process failed");
 		}
 
 		async void OnEvalAsyncClicked(object sender, EventArgs args)

@@ -191,6 +191,11 @@ namespace Microsoft.Maui.Controls
 		/// </summary>
 		public event EventHandler<WebNavigatingEventArgs> Navigating;
 
+		/// <summary>
+		///  Raised when a WebView process ends unexpectedly.
+		/// </summary>
+		public event EventHandler ProcessTerminated;
+
 		/// <inheritdoc/>
 		protected override void OnBindingContextChanged()
 		{
@@ -360,6 +365,11 @@ namespace Microsoft.Maui.Controls
 		{
 			var args = new WebNavigatedEventArgs(evnt, new UrlWebViewSource { Url = url }, url, result);
 			(this as IWebViewController)?.SendNavigated(args);
+		}
+
+		void IWebView.ProcessTerminated()
+		{
+			ProcessTerminated?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }
