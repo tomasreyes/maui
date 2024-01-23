@@ -152,7 +152,7 @@ namespace Microsoft.Maui.Handlers
 		// ProcessFailed is raised when a WebView process ends unexpectedly or becomes unresponsive.
 		void ProcessFailed(CoreWebView2 sender, CoreWebView2ProcessFailedEventArgs args)
 		{
-			SendProcessFailed();
+			SendProcessFailed(args);
 		}
 		
 		async void SendNavigated(string url, WebNavigationEvent evnt, WebNavigationResult result)
@@ -168,9 +168,9 @@ namespace Microsoft.Maui.Handlers
 			CurrentNavigationEvent = WebNavigationEvent.NewPage;
 		}
 
-		void SendProcessFailed()
+		void SendProcessFailed(CoreWebView2ProcessFailedEventArgs args)
 		{
-			VirtualView?.ProcessTerminated();
+			VirtualView?.ProcessTerminated(new WebProcessTerminated(args));
 		}
 
 		async Task SyncPlatformCookiesToVirtualView(string url)

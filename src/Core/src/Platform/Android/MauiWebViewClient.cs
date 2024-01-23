@@ -88,7 +88,7 @@ namespace Microsoft.Maui.Platform
 		{
 			if (_handler.TryGetTarget(out var handler))
 			{
-				handler.VirtualView.ProcessTerminated();
+				handler.VirtualView.ProcessTerminated(new WebProcessTerminated(detail));
 			}
 
 			return base.OnRenderProcessGone(view, detail);

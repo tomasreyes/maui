@@ -77,6 +77,6 @@ namespace Microsoft.Maui
 		/// For internal use by the .NET MAUI platform.
 		/// Raised when a WebView process ends unexpectedly.
 		/// </summary>
-		void ProcessTerminated();
+		void ProcessTerminated(WebProcessTerminated webProcessTerminated);
 	}
 }

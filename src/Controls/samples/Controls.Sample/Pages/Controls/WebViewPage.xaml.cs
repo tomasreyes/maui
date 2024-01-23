@@ -78,9 +78,17 @@ namespace Maui.Controls.Sample.Pages
 			Debug.WriteLine($"Navigated - Url: {e.Url}, Event: {e.NavigationEvent}, Result: {e.Result}");
 		}
 
-		void OnMauiWebViewProcessTerminated(object? sender, EventArgs e)
+		void OnMauiWebViewProcessTerminated(object? sender, WebViewProcessTerminatedEventArgs e)
 		{
-			Debug.WriteLine("WebView process failed");
+#if ANDROID
+			var renderProcessGoneDetail = e.RenderProcessGoneDetail;
+			Debug.WriteLine($"WebView process failed. DidCrash: {renderProcessGoneDetail.DidCrash()}");
+#elif WINDOWS
+			var coreWebView2ProcessFailedEventArgs = e.CoreWebView2ProcessFailedEventArgs;
+			Debug.WriteLine($"WebView process failed. ExitCode: {coreWebView2ProcessFailedEventArgs.ExitCode}");
+#else
+			Debug.WriteLine("WebView process failed.");
+#endif
 		}
 
 		async void OnEvalAsyncClicked(object sender, EventArgs args)
