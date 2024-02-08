@@ -369,7 +369,16 @@ namespace Microsoft.Maui.Controls
 
 		void IWebView.ProcessTerminated(WebProcessTerminated webProcessTerminated)
 		{
-			ProcessTerminated?.Invoke(this, new WebViewProcessTerminatedEventArgs(webProcessTerminated));
+#if ANDROID
+			var platformArgs = new PlatformWebViewProcessTerminatedEventArgs(webProcessTerminated.Sender, webProcessTerminated.RenderProcessGoneDetail);
+			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs(platformArgs);
+#elif WINDOWS
+			var platformArgs = new PlatformWebViewProcessTerminatedEventArgs(webProcessTerminated.Sender, webProcessTerminated.CoreWebView2ProcessFailedEventArgs);
+			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs();
+#else
+			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs();
+#endif
+			ProcessTerminated?.Invoke(this, webViewProcessTerminatedEventArgs);
 		}
 	}
 }

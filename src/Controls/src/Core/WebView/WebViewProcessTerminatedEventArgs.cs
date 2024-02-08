@@ -5,19 +5,21 @@ namespace Microsoft.Maui.Controls
 {
 	public class WebViewProcessTerminatedEventArgs : EventArgs
 	{
-		public WebViewProcessTerminatedEventArgs(WebProcessTerminated webProcessTerminated)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="WebViewProcessTerminatedEventArgs"/> class.
+		/// </summary>
+		public WebViewProcessTerminatedEventArgs()
 		{
-#if ANDROID
-			RenderProcessGoneDetail = webProcessTerminated.RenderProcessGoneDetail;
-#elif WINDOWS
-			CoreWebView2ProcessFailedEventArgs = webProcessTerminated.CoreWebView2ProcessFailedEventArgs;
-#endif
 		}
 
-#if ANDROID
-		public Android.Webkit.RenderProcessGoneDetail RenderProcessGoneDetail { get; }
-#elif WINDOWS
-		public Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs CoreWebView2ProcessFailedEventArgs { get; }
-#endif
+		internal WebViewProcessTerminatedEventArgs(PlatformWebViewProcessTerminatedEventArgs args = null)
+		{
+			PlatformArgs = args;
+		}
+
+		/// <summary>
+		/// Gets the platform-specific arguments associated with the <see cref="WebViewProcessTerminatedEventArgs"/>.
+		/// </summary>
+		public PlatformWebViewProcessTerminatedEventArgs PlatformArgs { get; private set; }
 	}
 }

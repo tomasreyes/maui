@@ -170,7 +170,7 @@ namespace Microsoft.Maui.Handlers
 
 		void SendProcessFailed(CoreWebView2ProcessFailedEventArgs args)
 		{
-			VirtualView?.ProcessTerminated(new WebProcessTerminated(args));
+			VirtualView?.ProcessTerminated(new WebProcessTerminated(PlatformView, args));
 		}
 
 		async Task SyncPlatformCookiesToVirtualView(string url)
