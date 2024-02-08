@@ -81,10 +81,10 @@ namespace Maui.Controls.Sample.Pages
 		void OnMauiWebViewProcessTerminated(object? sender, WebViewProcessTerminatedEventArgs e)
 		{
 #if ANDROID
-			var renderProcessGoneDetail = e.RenderProcessGoneDetail;
-			Debug.WriteLine($"WebView process failed. DidCrash: {renderProcessGoneDetail.DidCrash()}");
+			var renderProcessGoneDetail = e.PlatformArgs.RenderProcessGoneDetail;
+			Debug.WriteLine($"WebView process failed. DidCrash: {renderProcessGoneDetail?.DidCrash()}");
 #elif WINDOWS
-			var coreWebView2ProcessFailedEventArgs = e.CoreWebView2ProcessFailedEventArgs;
+			var coreWebView2ProcessFailedEventArgs = e.PlatformArgs.CoreWebView2ProcessFailedEventArgs;
 			Debug.WriteLine($"WebView process failed. ExitCode: {coreWebView2ProcessFailedEventArgs.ExitCode}");
 #else
 			Debug.WriteLine("WebView process failed.");
