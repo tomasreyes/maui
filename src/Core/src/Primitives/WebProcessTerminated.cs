@@ -12,13 +12,13 @@
 		public Android.Views.View? Sender { get; }
 		public Android.Webkit.RenderProcessGoneDetail? RenderProcessGoneDetail { get; }
 #elif WINDOWS
-		public WebProcessTerminated(UI.Xaml.FrameworkElement sender, Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs coreWebView2ProcessFailedEventArgs)
+		public WebProcessTerminated(Web.WebView2.Core.CoreWebView2 sender, Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs coreWebView2ProcessFailedEventArgs)
 		{
 			Sender = sender;
 			CoreWebView2ProcessFailedEventArgs = coreWebView2ProcessFailedEventArgs;
 		}
 
-		public UI.Xaml.FrameworkElement Sender { get; }
+		public Web.WebView2.Core.CoreWebView2 Sender { get; }
 		public Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs CoreWebView2ProcessFailedEventArgs { get; }
 #endif
 	}

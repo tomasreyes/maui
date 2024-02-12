@@ -46,8 +46,8 @@ Microsoft.Maui.SizeRequest.Equals(Microsoft.Maui.SizeRequest other) -> bool
 Microsoft.Maui.SoftInputExtensions
 Microsoft.Maui.WebProcessTerminated
 Microsoft.Maui.WebProcessTerminated.CoreWebView2ProcessFailedEventArgs.get -> Microsoft.Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs!
-Microsoft.Maui.WebProcessTerminated.Sender.get -> Microsoft.UI.Xaml.FrameworkElement!
-Microsoft.Maui.WebProcessTerminated.WebProcessTerminated(Microsoft.UI.Xaml.FrameworkElement! sender, Microsoft.Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs! coreWebView2ProcessFailedEventArgs) -> void
+Microsoft.Maui.WebProcessTerminated.Sender.get -> Microsoft.Web.WebView2.Core.CoreWebView2!
+Microsoft.Maui.WebProcessTerminated.WebProcessTerminated(Microsoft.Web.WebView2.Core.CoreWebView2! sender, Microsoft.Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs! coreWebView2ProcessFailedEventArgs) -> void
 override Microsoft.Maui.Handlers.ContentViewHandler.DisconnectHandler(Microsoft.Maui.Platform.ContentPanel! platformView) -> void
 override Microsoft.Maui.Handlers.ImageHandler.ConnectHandler(Microsoft.UI.Xaml.Controls.Image! platformView) -> void
 override Microsoft.Maui.Handlers.MenuFlyoutHandler.DisconnectHandler(Microsoft.UI.Xaml.Controls.MenuFlyout! platformView) -> void

@@ -54,7 +54,7 @@ Microsoft.Maui.Controls.InputView.SelectionLength.get -> int
 Microsoft.Maui.Controls.InputView.SelectionLength.set -> void
 Microsoft.Maui.Controls.PlatformWebViewProcessTerminatedEventArgs
 Microsoft.Maui.Controls.PlatformWebViewProcessTerminatedEventArgs.CoreWebView2ProcessFailedEventArgs.get -> Microsoft.Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs!
-Microsoft.Maui.Controls.PlatformWebViewProcessTerminatedEventArgs.Sender.get -> Microsoft.UI.Xaml.FrameworkElement!
+Microsoft.Maui.Controls.PlatformWebViewProcessTerminatedEventArgs.Sender.get -> Microsoft.Web.WebView2.Core.CoreWebView2!
 Microsoft.Maui.Controls.WebView.ProcessTerminated -> System.EventHandler<Microsoft.Maui.Controls.WebViewProcessTerminatedEventArgs>
 Microsoft.Maui.Controls.WebViewProcessTerminatedEventArgs
 Microsoft.Maui.Controls.WebViewProcessTerminatedEventArgs.WebViewProcessTerminatedEventArgs() -> void
