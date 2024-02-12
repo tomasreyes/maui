@@ -374,7 +374,7 @@ namespace Microsoft.Maui.Controls
 			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs(platformArgs);
 #elif WINDOWS
 			var platformArgs = new PlatformWebViewProcessTerminatedEventArgs(webProcessTerminated.Sender, webProcessTerminated.CoreWebView2ProcessFailedEventArgs);
-			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs();
+			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs(platformArgs);
 #else
 			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs();
 #endif
