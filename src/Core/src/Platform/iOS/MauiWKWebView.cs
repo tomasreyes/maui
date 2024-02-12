@@ -92,7 +92,7 @@ namespace Microsoft.Maui.Platform
 		public void ContentProcessDidTerminate(WKWebView webView)
 		{
 			if (_handler.TryGetTarget(out var handler))
-				handler.VirtualView.ProcessTerminated(new WebProcessTerminated());
+				handler.VirtualView.ProcessTerminated(new WebProcessTerminated(webView));
 		}
 
 		public void LoadHtml(string? html, string? baseUrl)

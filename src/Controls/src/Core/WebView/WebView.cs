@@ -372,6 +372,9 @@ namespace Microsoft.Maui.Controls
 #if ANDROID
 			var platformArgs = new PlatformWebViewProcessTerminatedEventArgs(webProcessTerminated.Sender, webProcessTerminated.RenderProcessGoneDetail);
 			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs(platformArgs);
+#elif IOS || MACCATALYST
+			var platformArgs = new PlatformWebViewProcessTerminatedEventArgs(webProcessTerminated.Sender);
+			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs(platformArgs);
 #elif WINDOWS
 			var platformArgs = new PlatformWebViewProcessTerminatedEventArgs(webProcessTerminated.Sender, webProcessTerminated.CoreWebView2ProcessFailedEventArgs);
 			var webViewProcessTerminatedEventArgs = new WebViewProcessTerminatedEventArgs(platformArgs);

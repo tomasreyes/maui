@@ -53,7 +53,7 @@ Microsoft.Maui.Platform.MauiScrollView.MauiScrollView() -> void
 Microsoft.Maui.Platform.KeyboardAutoManagerScroll
 Microsoft.Maui.SoftInputExtensions
 Microsoft.Maui.WebProcessTerminated
-Microsoft.Maui.WebProcessTerminated.WebProcessTerminated() -> void
+Microsoft.Maui.WebProcessTerminated.Sender.get -> WebKit.WKWebView!
 override Microsoft.Maui.Handlers.BorderHandler.PlatformArrange(Microsoft.Maui.Graphics.Rect rect) -> void
 override Microsoft.Maui.Handlers.ButtonHandler.NeedsContainer.get -> bool
 override Microsoft.Maui.Handlers.ContentViewHandler.DisconnectHandler(Microsoft.Maui.Platform.ContentView! platformView) -> void

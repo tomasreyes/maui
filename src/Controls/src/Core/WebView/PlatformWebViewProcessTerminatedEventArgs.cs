@@ -18,6 +18,16 @@
 		/// Gets the native event or handler attached to the view.
 		/// </summary>
 		public Android.Webkit.RenderProcessGoneDetail? RenderProcessGoneDetail { get; }
+#elif IOS || MACCATALYST
+		internal PlatformWebViewProcessTerminatedEventArgs(WebKit.WKWebView sender)
+		{
+			Sender = sender;
+		}
+				
+		/// <summary>
+		/// Gets the native view attached to the event.
+		/// </summary>
+		public WebKit.WKWebView Sender { get; }
 #elif WINDOWS
 
 		internal PlatformWebViewProcessTerminatedEventArgs(Web.WebView2.Core.CoreWebView2 sender, Web.WebView2.Core.CoreWebView2ProcessFailedEventArgs coreWebView2ProcessFailedEventArgs)

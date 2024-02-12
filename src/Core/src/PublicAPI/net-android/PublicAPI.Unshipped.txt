@@ -60,7 +60,6 @@ Microsoft.Maui.SoftInputExtensions
 Microsoft.Maui.WebProcessTerminated
 Microsoft.Maui.WebProcessTerminated.RenderProcessGoneDetail.get -> Android.Webkit.RenderProcessGoneDetail?
 Microsoft.Maui.WebProcessTerminated.Sender.get -> Android.Views.View?
-Microsoft.Maui.WebProcessTerminated.WebProcessTerminated(Android.Views.View? sender, Android.Webkit.RenderProcessGoneDetail? renderProcessGoneDetail) -> void
 override Microsoft.Maui.FontSize.Equals(object? obj) -> bool
 override Microsoft.Maui.FontSize.GetHashCode() -> int
 override Microsoft.Maui.Handlers.EditorHandler.PlatformArrange(Microsoft.Maui.Graphics.Rect frame) -> void
