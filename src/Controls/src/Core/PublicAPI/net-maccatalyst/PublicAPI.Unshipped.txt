@@ -78,6 +78,7 @@ Microsoft.Maui.Controls.WebView.ProcessTerminated -> System.EventHandler<Microso
 Microsoft.Maui.Controls.WebViewProcessTerminatedEventArgs
 Microsoft.Maui.Controls.WebViewProcessTerminatedEventArgs.WebViewProcessTerminatedEventArgs() -> void
 override Microsoft.Maui.Controls.Handlers.Items.TemplatedCell.PrepareForReuse() -> void
+override Microsoft.Maui.Controls.Handlers.Items.ItemsViewController<TItemsView>.LoadView() -> void
 static readonly Microsoft.Maui.Controls.KeyboardAccelerator.KeyProperty -> Microsoft.Maui.Controls.BindableProperty!
 static readonly Microsoft.Maui.Controls.KeyboardAccelerator.ModifiersProperty -> Microsoft.Maui.Controls.BindableProperty!
 static readonly Microsoft.Maui.Controls.DragGestureRecognizer.CanDragProperty -> Microsoft.Maui.Controls.BindableProperty!
