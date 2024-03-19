@@ -606,6 +606,11 @@ namespace UITest.Appium
 			return element.AppiumElement.Equals(activeElement);
 		}
 
+		/// <summary>
+		/// Lock the screen.
+		/// </summary>
+		/// <param name="app">Represents the main gateway to interact with an app.</param>
+		/// <exception cref="InvalidOperationException">Lock is only supported on <see cref="AppiumAndroidApp"/>.</exception>
 		public static void Lock(this IApp app)
 		{
 			if (app is not AppiumAndroidApp)
@@ -616,6 +621,12 @@ namespace UITest.Appium
 			app.CommandExecutor.Execute("lock", ImmutableDictionary<string, object>.Empty);
 		}
 
+		/// <summary>
+		/// Unlock the screen.
+		/// Functionality that's only available on Android.
+		/// </summary>
+		/// <param name="app">Represents the main gateway to interact with an app.</param>
+		/// <exception cref="InvalidOperationException">Unlock is only supported on <see cref="AppiumAndroidApp"/>.</exception>
 		public static void Unlock(this IApp app)
 		{
 			if (app is not AppiumAndroidApp)
@@ -626,6 +637,12 @@ namespace UITest.Appium
 			app.CommandExecutor.Execute("unlock", ImmutableDictionary<string, object>.Empty);
 		}
 
+		/// <summary>
+		/// Start recording screen.
+		/// Functionality that's only available on Android.
+		/// </summary>
+		/// <param name="app">Represents the main gateway to interact with an app.</param>
+		/// <exception cref="InvalidOperationException">StartRecordingScreen is only supported on <see cref="AppiumAndroidApp"/>.</exception>
 		public static void StartRecordingScreen(this IApp app)
 		{
 			if (app is not AppiumAndroidApp)
@@ -636,6 +653,12 @@ namespace UITest.Appium
 			app.CommandExecutor.Execute("startRecordingScreen", ImmutableDictionary<string, object>.Empty);
 		}
 
+		/// <summary>
+		/// Stop recording screen.
+		/// Functionality that's only available on Android.
+		/// </summary>
+		/// <param name="app">Represents the main gateway to interact with an app.</param>
+		/// <exception cref="InvalidOperationException">StopRecordingScreen is only supported on <see cref="AppiumAndroidApp"/>.</exception>
 		public static void StopRecordingScreen(this IApp app)
 		{
 			if (app is not AppiumAndroidApp)
@@ -646,6 +669,12 @@ namespace UITest.Appium
 			app.CommandExecutor.Execute("stopRecordingScreen", ImmutableDictionary<string, object>.Empty);
 		}
 
+		/// <summary>
+		/// Toggle airplane mode on device.
+		/// Functionality that's only available on Android.
+		/// </summary>
+		/// <param name="app">Represents the main gateway to interact with an app.</param>
+		/// <exception cref="InvalidOperationException">ToggleAirplaneMode is only supported on <see cref="AppiumAndroidApp"/>.</exception>
 		public static void ToggleAirplaneMode(this IApp app)
 		{
 			if (app is not AppiumAndroidApp)
@@ -656,6 +685,12 @@ namespace UITest.Appium
 			app.CommandExecutor.Execute("toggleAirplaneMode", ImmutableDictionary<string, object>.Empty);
 		}
 
+		/// <summary>
+		/// Switch the state of the wifi service.
+		/// Functionality that's only available on Android.
+		/// </summary>
+		/// <param name="app">Represents the main gateway to interact with an app.</param>
+		/// <exception cref="InvalidOperationException">ToggleWifi is only supported on <see cref="AppiumAndroidApp"/>.</exception>
 		public static void ToggleWifi(this IApp app)
 		{
 			if (app is not AppiumAndroidApp)
