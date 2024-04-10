@@ -37,10 +37,6 @@ namespace Microsoft.Maui.AppiumTests.Issues
 
 				// 3. Verify that the virtual keyboard appears.
 				Assert.IsTrue(App.IsKeyboardShown());
-
-				// 4. Extra step, get the performance data.
-				var batteryInfo = App.GetPerformanceData("batteryinfo");
-				Console.WriteLine(batteryInfo.ToString());
 			}
 			finally
 			{
