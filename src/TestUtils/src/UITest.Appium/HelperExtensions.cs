@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Drawing;
 using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Android.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using UITest.Core;
 
@@ -31,11 +30,6 @@ namespace UITest.Appium
 		/// <param name="app">Represents the main gateway to interact with an app.</param>
 		/// <param name="element">Target Element.</param>
 		public static void Click(this IApp app, string element)
-		{
-			app.FindElement(element).Click();
-		}
-
-		public static void Tap(this IApp app, string element)
 		{
 			app.FindElement(element).Click();
 		}
