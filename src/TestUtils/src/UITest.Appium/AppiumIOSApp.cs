@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 using UITest.Core;
@@ -12,7 +12,8 @@ namespace UITest.Appium
 			: base(new IOSDriver(remoteAddress, GetOptions(config)), config)
 		{
 			_commandExecutor.AddCommandGroup(new AppiumIOSSpecificActions(this));
-			_commandExecutor.AddCommandGroup(new AppiumIOSPointerActions(this));
+			_commandExecutor.AddCommandGroup(new AppiumIOSMouseActions(this));
+			_commandExecutor.AddCommandGroup(new AppiumIOSTouchActions(this));
 			_commandExecutor.AddCommandGroup(new AppiumIOSVirtualKeyboardActions(this));
 		}
 
