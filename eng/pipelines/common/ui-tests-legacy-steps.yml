@@ -9,6 +9,7 @@ parameters:
   agentPoolAccessToken: ''
   targetSample: "dotnet-legacy-controlgallery"
   configuration : "Release"
+  categoryFilter: ''
 
 steps:
   - ${{ if eq(parameters.platform, 'ios')}}:

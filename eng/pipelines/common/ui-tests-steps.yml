@@ -8,6 +8,7 @@ parameters:
   provisionatorChannel: 'latest'
   agentPoolAccessToken: ''
   configuration : "Release"
+  categoryFilter: ''
 
 steps:
   - ${{ if eq(parameters.platform, 'ios')}}:

@@ -126,6 +126,11 @@ parameters:
       demands:
         - macOS.Name -equals Ventura
         - macOS.Architecture -equals x64
+    
+  - name: categoryFilter
+    displayName: Category Filter (comma separated, empty runs all)
+    type: string
+    default: ''
 
 resources:
   repositories:
@@ -158,6 +163,8 @@ stages:
         provisionatorChannel: ${{ parameters.provisionatorChannel }}
       ${{ if or(parameters.CompatibilityTests, ne(variables['Build.Reason'], 'PullRequest')) }}:
         runCompatibilityTests: true
+      ${{ if ne(parameters.categoryFilter) }}:
+        categoryFilter: $ {{ parameters.categoryFilter }}
       projects:
         - name: controls
           desc: Controls

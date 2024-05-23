@@ -13,6 +13,7 @@ parameters:
   agentPoolAccessToken: ''
   runCompatibilityTests: false
   runLegacyTests: true
+  categoryFilter: ''
   projects:
     - name: name
       desc: Human Description
