@@ -164,7 +164,7 @@ stages:
       ${{ if or(parameters.CompatibilityTests, ne(variables['Build.Reason'], 'PullRequest')) }}:
         runCompatibilityTests: true
       ${{ if ne(parameters.testFilter, '') }}:
-        testFilter: $ {{ parameters.testFilter }}
+        testFilter: ${{ parameters.testFilter }}
       projects:
         - name: controls
           desc: Controls

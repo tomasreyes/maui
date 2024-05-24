@@ -84,7 +84,7 @@ steps:
     condition: ${{ eq(parameters.platform, 'ios') }}
     continueOnError: true
 
-  - pwsh: ./build.ps1 -Script eng/devices/${{ parameters.platform }}.cake --target=uitest --project="${{ parameters.path }}" --appproject="${{ parameters.app }}" --device="${{ parameters.device }}" --apiversion="${{ parameters.version }}" --configuration="${{ parameters.configuration }}" --results="$(TestResultsDirectory)" --binlog="$(LogDirectory)" --test-filter="${{ parameters.testFilter }}" ${{ parameters.cakeArgs }} --verbosity=diagnostic
+  - pwsh: ./build.ps1 -Script eng/devices/${{ parameters.platform }}.cake --target=uitest --project="${{ parameters.path }}" --appproject="${{ parameters.app }}" --device="${{ parameters.device }}" --apiversion="${{ parameters.version }}" --configuration="${{ parameters.configuration }}" --results="$(TestResultsDirectory)" --binlog="$(LogDirectory)" --test-filter "${{ parameters.testFilter }}" ${{ parameters.cakeArgs }} --verbosity=diagnostic
     displayName: $(Agent.JobName)
     ${{ if ne(parameters.platform, 'android')}}:
       retryCountOnTaskFailure: 1
