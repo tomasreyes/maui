@@ -127,8 +127,8 @@ parameters:
         - macOS.Name -equals Ventura
         - macOS.Architecture -equals x64
     
-  - name: categoryFilter
-    displayName: Category Filter (comma separated, empty runs all)
+  - name: testFilter
+    displayName: Test Filter (NUnit format, empty runs all)
     type: string
     default: ''
 
@@ -163,8 +163,8 @@ stages:
         provisionatorChannel: ${{ parameters.provisionatorChannel }}
       ${{ if or(parameters.CompatibilityTests, ne(variables['Build.Reason'], 'PullRequest')) }}:
         runCompatibilityTests: true
-      ${{ if ne(parameters.categoryFilter, '') }}:
-        categoryFilter: $ {{ parameters.categoryFilter }}
+      ${{ if ne(parameters.testFilter, '') }}:
+        testFilter: $ {{ parameters.testFilter }}
       projects:
         - name: controls
           desc: Controls

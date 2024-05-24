@@ -13,7 +13,7 @@ parameters:
   agentPoolAccessToken: ''
   runCompatibilityTests: false
   runLegacyTests: true
-  categoryFilter: ''
+  testFilter: ''
   projects:
     - name: name
       desc: Human Description
@@ -63,6 +63,7 @@ stages:
                         device: android-emulator-64_${{ api }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
+                      testFilter: ${{ parameters.testFilter }}
 
   - stage: ios_ui_tests
     displayName: iOS UITests
@@ -97,6 +98,7 @@ stages:
                         device: ios-simulator-64_${{ version }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
+                      testFilter: ${{ parameters.testFilter }}
 
   - stage: winui_ui_tests
     displayName: WinUI UITests
@@ -122,6 +124,7 @@ stages:
                       app: ${{ project.app }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
+                      testFilter: ${{ parameters.testFilter }}
 
   - stage: mac_ui_tests
     displayName: macOS UITests
@@ -148,6 +151,7 @@ stages:
                       app: ${{ project.app }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
+                      testFilter: ${{ parameters.testFilter }}
 
   - ${{ if eq(parameters.runCompatibilityTests, true) }}:  
     - stage: android_compatibility_ui_tests
@@ -182,6 +186,7 @@ stages:
                           DEVICE: android-emulator-64_${{ api }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
+                        testFilter: ${{ parameters.testFilter }}
 
     - stage: ios_compatibility_ui_tests
       displayName: iOS Compatibility UITests
@@ -218,6 +223,8 @@ stages:
                           device: ios-simulator-64_${{ version }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
+                        testFilter: ${{ parameters.testFilter }}
+
   - ${{ if eq(parameters.runLegacyTests, true) }}:  
     - stage: android_legacy_ui_tests
       displayName: Android Legacy UITests
@@ -250,6 +257,7 @@ stages:
                           device: android-emulator-64_${{ api }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
+                        testFilter: ${{ parameters.testFilter }}
 
     - stage: ios_legacy_ui_tests
       displayName: iOS Legacy UITests
@@ -285,3 +293,4 @@ stages:
                           device: ios-simulator-64_${{ version }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
+                        testFilter: ${{ parameters.testFilter }}

@@ -18,9 +18,6 @@ var platform = testDevice.ToLower().Contains("simulator") ? "iPhoneSimulator" : 
 var runtimeIdentifier = Argument("rid", EnvironmentVariable("IOS_RUNTIME_IDENTIFIER") ?? GetDefaultRuntimeIdentifier(testDevice));
 var deviceCleanupEnabled = Argument("cleanup", true);
 
-// Test where clause
-string testWhere = Argument("where", EnvironmentVariable("NUNIT_TEST_WHERE") ?? "");
-
 // Device details
 var udid = Argument("udid", EnvironmentVariable("IOS_SIMULATOR_UDID") ?? "");
 var iosVersion = Argument("apiversion", EnvironmentVariable("IOS_PLATFORM_VERSION") ?? DefaultVersion);
