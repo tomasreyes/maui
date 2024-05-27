@@ -11,6 +11,10 @@ parameters:
   testFilter: ''
 
 steps:
+  - task: DownloadBuildArtifacts@1
+    condition: eq('${{ parameters.platform }}' , 'android')
+
+
   - ${{ if eq(parameters.platform, 'ios')}}:
     - bash: |
         chmod +x $(System.DefaultWorkingDirectory)/eng/scripts/clean-bot.sh
@@ -62,6 +66,7 @@ steps:
       APPIUM_HOME: $(APPIUM_HOME)
 
   - pwsh: ./build.ps1 --target=dotnet --configuration="${{ parameters.configuration }}" --verbosity=diagnostic
+    condition: ne('${{ parameters.platform }}' , 'android')
     displayName: 'Install .NET'
     retryCountOnTaskFailure: 2
     env:
@@ -69,12 +74,15 @@ steps:
       PRIVATE_BUILD: $(PrivateBuild)
 
   - pwsh: echo "##vso[task.prependpath]$(DotNet.Dir)"
+    condition: ne('${{ parameters.platform }}' , 'android')
     displayName: 'Add .NET to PATH'
 
   - pwsh: ./build.ps1 --target=dotnet-buildtasks --configuration="${{ parameters.configuration }}"
+    condition: ne('${{ parameters.platform }}' , 'android')
     displayName: 'Build the MSBuild Tasks'
 
   - pwsh: ./build.ps1 --target=dotnet-samples --configuration="${{ parameters.configuration }}" --${{ parameters.platform }} --verbosity=diagnostic --usenuget=false
+    condition: ne('${{ parameters.platform }}' , 'android')
     displayName: 'Build the samples'
 
   - bash: |
