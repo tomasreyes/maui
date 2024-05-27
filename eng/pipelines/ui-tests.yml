@@ -144,6 +144,7 @@ stages:
 
   - template: common/ui-tests.yml
     parameters:
+      categoriesToTest: [ 'ScrollView', 'Button' ]
       androidPool: ${{ parameters.androidPool }}
       iosPool: ${{ parameters.iosPool }}
       windowsPool: ${{ parameters.windowsPool }}
