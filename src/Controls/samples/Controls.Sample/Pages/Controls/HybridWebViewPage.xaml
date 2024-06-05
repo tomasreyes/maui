@@ -7,10 +7,14 @@
   <views:BasePage.Content>
     <ScrollView>
       <VerticalStackLayout Padding="12">
-        <Label Text="HybridWebView here" />
+        <Label Text="HybridWebView here" x:Name="statusLabel" />
+        <Button Text="Send message to JS" Pressed="SendMessageButton_Pressed" />
         <HybridWebView
+            x:Name="hwv"
             HeightRequest="150"
-            HorizontalOptions="FillAndExpand" />
+            HorizontalOptions="FillAndExpand"
+            HybridRoot="HybridSamplePage"
+            RawMessageReceived="hwv_RawMessageReceived"/>
       </VerticalStackLayout>
     </ScrollView>
   </views:BasePage.Content>

@@ -8,5 +8,7 @@
 		///  The default value is <c>HybridRoot</c>, which maps to <c>[ProjectFolder]/Resources/Raw/HybridRoot</c>.
 		/// </summary>
 		string? HybridRoot { get; set;  }
+
+		void RawMessageReceived(string rawMessage);
 	}
 }

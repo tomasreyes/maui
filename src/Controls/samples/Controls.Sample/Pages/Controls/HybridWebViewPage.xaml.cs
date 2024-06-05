@@ -9,5 +9,15 @@ namespace Maui.Controls.Sample.Pages
 		{
 			InitializeComponent();
 		}
+
+		private void SendMessageButton_Pressed(object sender, EventArgs e)
+		{
+			//hwv.SendMessage()...
+		}
+
+		private void hwv_RawMessageReceived(object sender, HybridWebView.HybridWebViewRawMessageReceivedEventArgs e)
+		{
+			statusLabel.Text += e.Message;
+		}
 	}
 }

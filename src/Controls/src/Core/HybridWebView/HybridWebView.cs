@@ -41,31 +41,45 @@ namespace Microsoft.Maui.Controls
 			set { SetValue(HybridRootProperty, value); }
 		}
 
-		///// <summary>
-		///// Raised when a raw message is received from the web view. Raw messages are strings that have no additional processing.
-		///// </summary>
-		//public event EventHandler<HybridWebViewRawMessageReceivedEventArgs>? RawMessageReceived;
+		void IHybridWebView.RawMessageReceived(string rawMessage)
+		{
+			RawMessageReceived?.Invoke(this, new HybridWebViewRawMessageReceivedEventArgs(rawMessage));
+		}
 
+		/// <summary>
+		/// Raised when a raw message is received from the web view. Raw messages are strings that have no additional processing.
+		/// </summary>
+		public event EventHandler<HybridWebViewRawMessageReceivedEventArgs>? RawMessageReceived;
+
+		public class HybridWebViewRawMessageReceivedEventArgs : EventArgs
+		{
+			public HybridWebViewRawMessageReceivedEventArgs(string? message)
+			{
+				Message = message;
+			}
+
+			public string? Message { get; }
+		}
 		//public void Navigate(string url)
 		//{
 		//	NavigateCore(url);
 		//}
 
-//		protected override async void OnHandlerChanged()
-//		{
-//			base.OnHandlerChanged();
+		//		protected override async void OnHandlerChanged()
+		//		{
+		//			base.OnHandlerChanged();
 
-//			await InitializeHybridWebView();
+		//			await InitializeHybridWebView();
 
-//			HybridWebViewInitialized?.Invoke(this, new HybridWebViewInitializedEventArgs()
-//			{
-//#if ANDROID || IOS || MACCATALYST || WINDOWS
-//                WebView = PlatformWebView,
-//#endif
-//			});
+		//			HybridWebViewInitialized?.Invoke(this, new HybridWebViewInitializedEventArgs()
+		//			{
+		//#if ANDROID || IOS || MACCATALYST || WINDOWS
+		//                WebView = PlatformWebView,
+		//#endif
+		//			});
 
-//			Navigate(StartPath);
-//		}
+		//			Navigate(StartPath);
+		//		}
 
 		public void SendMessage(string message)
 		{
