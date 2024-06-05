@@ -9,12 +9,14 @@ using PlatformView = Microsoft.Maui.Platform.MauiWebView;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !ANDROID && !TIZEN)
 using PlatformView = System.Object;
 #endif
-
 #if __ANDROID__
 using Android.Webkit;
 #elif __IOS__
 using WebKit;
 #endif
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.Maui.Storage;
 
 namespace Microsoft.Maui.Handlers
 {
@@ -22,7 +24,7 @@ namespace Microsoft.Maui.Handlers
 	{
         public static IPropertyMapper<IHybridWebView, IHybridWebViewHandler> Mapper = new PropertyMapper<IHybridWebView, IHybridWebViewHandler>(ViewHandler.ViewMapper)
         {
-//            [nameof(IWebView.Source)] = MapSource,
+            [nameof(IHybridWebView.HybridRoot)] = MapHybridRoot,
 //            [nameof(IWebView.UserAgent)] = MapUserAgent,
 //#if __ANDROID__
 //			[nameof(WebViewClient)] = MapWebViewClient,
@@ -54,5 +56,29 @@ namespace Microsoft.Maui.Handlers
         IHybridWebView IHybridWebViewHandler.VirtualView => VirtualView;
 
         PlatformView IHybridWebViewHandler.PlatformView => PlatformView;
-    }
+
+
+		internal static async Task<string?> GetAssetContentAsync(string assetPath)
+		{
+			using var stream = await GetAssetStreamAsync(assetPath);
+			if (stream == null)
+			{
+				return null;
+			}
+			using var reader = new StreamReader(stream);
+
+			var contents = reader.ReadToEnd();
+
+			return contents;
+		}
+
+		internal static async Task<Stream?> GetAssetStreamAsync(string assetPath)
+		{
+			if (!await FileSystem.AppPackageFileExistsAsync(assetPath))
+			{
+				return null;
+			}
+			return await FileSystem.OpenAppPackageFileAsync(assetPath);
+		}
+	}
 }

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Microsoft.Maui.DeviceTests
 {
-	[Category(TestCategory.WebView)]
+	[Category(TestCategory.HybridWebView)]
 	public class HybridWebViewTests : ControlsHandlerTestBase
 	{
 		void SetupBuilder()
@@ -68,7 +68,7 @@ namespace Microsoft.Maui.DeviceTests
 				// Setup the view to be displayed/parented and run our tests on it
 				await AttachAndRun(hybridWebView, async (handler) =>
 				{
-					await Task.Delay(1000);
+					await Task.Delay(5000);
 					//// Wait for the page to load
 					//var tcsLoaded = new TaskCompletionSource<bool>();
 					//var ctsTimeout = new CancellationTokenSource(pageLoadTimeout);

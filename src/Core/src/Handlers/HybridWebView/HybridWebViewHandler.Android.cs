@@ -32,6 +32,9 @@ namespace Microsoft.Maui.Handlers
 		//	return platformView;
 		//}
 
+		public static void MapHybridRoot(IHybridWebViewHandler handler, IHybridWebView hybridWebView) { }
+
+
 		//internal WebNavigationEvent CurrentNavigationEvent
 		//{
 		//	get => _eventState;

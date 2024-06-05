@@ -6,7 +6,7 @@ namespace Microsoft.Maui.Handlers
 	{
 		protected override object CreatePlatformView() => throw new NotImplementedException();
 
-		//public static void MapSource(IHybridWebViewHandler handler, IHybridWebView webView) { }
+		public static void MapHybridRoot(IHybridWebViewHandler handler, IHybridWebView hybridWebView) { }
 		//public static void MapUserAgent(IHybridWebViewHandler handler, IHybridWebView webView) { }
 
 		//public static void MapGoBack(IHybridWebViewHandler handler, IHybridWebView webView, object? arg) { }
