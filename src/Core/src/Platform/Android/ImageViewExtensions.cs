@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
+using Bumptech.Glide.Load.Resource.Gif;
 
 namespace Microsoft.Maui.Platform
 {
@@ -29,7 +30,20 @@ namespace Microsoft.Maui.Platform
 
 		public static void UpdateIsAnimationPlaying(this Drawable? drawable, IImageSourcePart image)
 		{
+			// IMPORTANT:
+			// The linker will remove the interface from the concrete type if we don't force
+			// the linker to be aware of both the concrete and interface types.
+
 			if (drawable is IAnimatable animatable)
+				Update(image, animatable);
+			else if (drawable is AnimationDrawable ad)
+				Update(image, ad);
+			else if (drawable is GifDrawable gif)
+				Update(image, gif);
+			else if (OperatingSystem.IsAndroidVersionAtLeast(28) && drawable is AnimatedImageDrawable aid)
+				Update(image, aid);
+
+			static void Update(IImageSourcePart image, IAnimatable animatable)
 			{
 				if (image.IsAnimationPlaying)
 				{
