@@ -30,7 +30,11 @@ namespace Microsoft.Maui.Platform
 
 		public static void UpdateIsAnimationPlaying(this Drawable? drawable, IImageSourcePart image)
 		{
-			var animatable = drawable.TryJavaCast<IAnimatable>();
+			// Testing the tests...
+			var animatable = drawable as IAnimatable;
+			
+			// But this is what I will do:
+			// var animatable = drawable.TryJavaCast<IAnimatable>();
 			if (animatable is not null)
 			{
 				if (image.IsAnimationPlaying)
