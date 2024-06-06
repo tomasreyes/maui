@@ -4,7 +4,7 @@ using OpenQA.Selenium.Appium;
 using UITest.Appium;
 using UITest.Core;
 
-namespace Microsoft.Maui.AppiumTests
+namespace Microsoft.Maui.TestCases.Tests
 {
 	public class AlertsGalleryTests : CoreGalleryBasePageTest
 	{
