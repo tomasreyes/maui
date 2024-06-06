@@ -38,7 +38,7 @@ internal class ImageUITests : _ViewUITests
 	}
 
 	[Test]
-	public async void IsAnimationPlaying()
+	public async Task IsAnimationPlaying()
 	{
 		var remote = GoToStateRemote();
 		await Task.Delay(500); // make sure the gif is NOT playing
