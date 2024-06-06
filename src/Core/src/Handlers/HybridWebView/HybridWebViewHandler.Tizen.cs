@@ -10,6 +10,7 @@
 		};
 
 		public static void MapHybridRoot(IHybridWebViewHandler handler, IHybridWebView hybridWebView) { }
+		public static void MapSendRawMessage(IHybridWebViewHandler handler, IHybridWebView hybridWebView, object? arg) { }
 
 		//protected override void ConnectHandler(MauiWebView platformView)
 		//{

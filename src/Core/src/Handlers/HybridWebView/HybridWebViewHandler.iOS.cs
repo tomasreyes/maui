@@ -23,6 +23,7 @@ namespace Microsoft.Maui.Handlers
 			null!;// new MauiWKWebView(this);
 
 		public static void MapHybridRoot(IHybridWebViewHandler handler, IHybridWebView hybridWebView) { }
+		public static void MapSendRawMessage(IHybridWebViewHandler handler, IHybridWebView hybridWebView, object? arg) { }
 
 
 		//public static void MapWKUIDelegate(IWebViewHandler handler, IWebView webView)

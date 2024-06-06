@@ -33,6 +33,7 @@ namespace Microsoft.Maui.Handlers
 		//}
 
 		public static void MapHybridRoot(IHybridWebViewHandler handler, IHybridWebView hybridWebView) { }
+		public static void MapSendRawMessage(IHybridWebViewHandler handler, IHybridWebView hybridWebView, object? arg) { }
 
 
 		//internal WebNavigationEvent CurrentNavigationEvent

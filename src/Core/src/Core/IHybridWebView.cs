@@ -10,5 +10,7 @@
 		string? HybridRoot { get; set;  }
 
 		void RawMessageReceived(string rawMessage);
+
+		void SendRawMessage(string rawMessage);
 	}
 }

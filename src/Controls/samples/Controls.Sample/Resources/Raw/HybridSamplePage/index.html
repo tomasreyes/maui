@@ -23,6 +23,17 @@
             }
 
         }
+
+        function ReceiveRawMessageFromCSharp(message) {
+            var messageFromCSharp = document.getElementById("messageFromCSharp");
+            messageFromCSharp.value += '\r\n' + message;
+        }
+
+        window.chrome.webview.addEventListener('message', arg => {
+            ReceiveRawMessageFromCSharp(arg.data);
+        });
+
+
     </script>
 </head>
 <body>
@@ -31,6 +42,9 @@
     </div>
     <div>
         <button onclick="SendRawMessageToCSharp()">Send message to C#</button>
+    </div>
+    <div>
+        Message from C#: <textarea readonly id="messageFromCSharp" style="width: 80%; height: 10em;"></textarea>
     </div>
 </body>
 </html>

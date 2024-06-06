@@ -75,6 +75,17 @@ namespace Microsoft.Maui.Handlers
 			}
 		}
 
+		public static void MapSendRawMessage(IHybridWebViewHandler handler, IHybridWebView hybridWebView, object? arg)
+		{
+			if (arg is not string rawMessage || handler.PlatformView is not IHybridPlatformWebView hybridPlatformWebView)
+			{
+				return;
+			}
+
+			hybridPlatformWebView.SendRawMessage(rawMessage);
+		}
+
+
 		private void OnWebMessageReceived(CoreWebView2WebMessageReceivedEventArgs args)
 		{
 			VirtualView?.RawMessageReceived(args.TryGetWebMessageAsString());
@@ -221,6 +232,10 @@ namespace Microsoft.Maui.Handlers
 	$@"Content-Type: {contentType}
 Content-Length: {contentLength}";
 
+			public void SendRawMessage(string rawMessage)
+			{
+				CoreWebView2.PostWebMessageAsString(rawMessage);
+			}
 		}
 
 	}

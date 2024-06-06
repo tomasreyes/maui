@@ -37,7 +37,7 @@ namespace Microsoft.Maui.Handlers
 
         public static CommandMapper<IHybridWebView, IHybridWebViewHandler> CommandMapper = new(ViewCommandMapper)
         {
-            //[nameof(IWebView.GoBack)] = MapGoBack,
+            [nameof(IHybridWebView.SendRawMessage)] = MapSendRawMessage,
             //[nameof(IWebView.GoForward)] = MapGoForward,
             //[nameof(IWebView.Reload)] = MapReload,
             //[nameof(IWebView.Eval)] = MapEval,

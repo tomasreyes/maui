@@ -12,7 +12,7 @@ namespace Maui.Controls.Sample.Pages
 
 		private void SendMessageButton_Pressed(object sender, EventArgs e)
 		{
-			//hwv.SendMessage()...
+			hwv.SendRawMessage("Hello from C#!");
 		}
 
 		private void hwv_RawMessageReceived(object sender, HybridWebView.HybridWebViewRawMessageReceivedEventArgs e)

@@ -81,63 +81,65 @@ namespace Microsoft.Maui.Controls
 		//			Navigate(StartPath);
 		//		}
 
-		public void SendMessage(string message)
+		public void SendRawMessage(string rawMessage)
 		{
+			Handler?.Invoke(nameof(IHybridWebView.SendRawMessage), rawMessage);
+
 			//EvaluateJavaScriptAsync($"window.mauiBlazorWebView.receiveMessage({JsonSerializer.Serialize(message)})");
 		}
 
-//		private partial Task InitializeHybridWebView();
+		//		private partial Task InitializeHybridWebView();
 
-//		private partial void NavigateCore(string url);
+		//		private partial void NavigateCore(string url);
 
 
-//#if !ANDROID && !IOS && !MACCATALYST && !WINDOWS
-//		private partial Task InitializeHybridWebView() => throw null!;
+		//#if !ANDROID && !IOS && !MACCATALYST && !WINDOWS
+		//		private partial Task InitializeHybridWebView() => throw null!;
 
-//		private partial void NavigateCore(string url) => throw null!;
-//#endif
+		//		private partial void NavigateCore(string url) => throw null!;
+		//#endif
 
-//		public virtual void OnMessageReceived(string message)
-//		{
-//			var messageData = JsonSerializer.Deserialize<WebMessageData>(message);
-//			switch (messageData?.MessageType)
-//			{
-//				case 0: // "raw" message (just a string)
-//					RawMessageReceived?.Invoke(this, new HybridWebViewRawMessageReceivedEventArgs(messageData.MessageContent));
-//					break;
-//				default:
-//					throw new InvalidOperationException($"Unknown message type: {messageData?.MessageType}. Message contents: {messageData?.MessageContent}");
-//			}
+		//		public virtual void OnMessageReceived(string message)
+		//		{
+		//			var messageData = JsonSerializer.Deserialize<WebMessageData>(message);
+		//			switch (messageData?.MessageType)
+		//			{
+		//				case 0: // "raw" message (just a string)
+		//					RawMessageReceived?.Invoke(this, new HybridWebViewRawMessageReceivedEventArgs(messageData.MessageContent));
+		//					break;
+		//				default:
+		//					throw new InvalidOperationException($"Unknown message type: {messageData?.MessageType}. Message contents: {messageData?.MessageContent}");
+		//			}
 
-//		}
+		//		}
 
-//		private sealed class WebMessageData
-//		{
-//			public int MessageType { get; set; }
-//			public string? MessageContent { get; set; }
-//		}
+		//		private sealed class WebMessageData
+		//		{
+		//			public int MessageType { get; set; }
+		//			public string? MessageContent { get; set; }
+		//		}
 
-//		internal static async Task<string?> GetAssetContentAsync(string assetPath)
-//		{
-//			using var stream = await GetAssetStreamAsync(assetPath);
-//			if (stream == null)
-//			{
-//				return null;
-//			}
-//			using var reader = new StreamReader(stream);
+		//		internal static async Task<string?> GetAssetContentAsync(string assetPath)
+		//		{
+		//			using var stream = await GetAssetStreamAsync(assetPath);
+		//			if (stream == null)
+		//			{
+		//				return null;
+		//			}
+		//			using var reader = new StreamReader(stream);
 
-//			var contents = reader.ReadToEnd();
+		//			var contents = reader.ReadToEnd();
 
-//			return contents;
-//		}
+		//			return contents;
+		//		}
 
-//		internal static async Task<Stream?> GetAssetStreamAsync(string assetPath)
-//		{
-//			if (!await FileSystem.AppPackageFileExistsAsync(assetPath))
-//			{
-//				return null;
-//			}
-//			return await FileSystem.OpenAppPackageFileAsync(assetPath);
-//		}
+		//		internal static async Task<Stream?> GetAssetStreamAsync(string assetPath)
+		//		{
+		//			if (!await FileSystem.AppPackageFileExistsAsync(assetPath))
+		//			{
+		//				return null;
+		//			}
+		//			return await FileSystem.OpenAppPackageFileAsync(assetPath);
+		//		}
 	}
 }
