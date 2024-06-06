@@ -1,6 +1,5 @@
-﻿using Maui.Controls.Sample;
-using NUnit.Framework;
-using OpenQA.Selenium.Appium;
+﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using UITest.Appium;
 using UITest.Core;
 
@@ -18,24 +17,23 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.NavigateToGallery("Alerts Gallery");
 		}
 
+// TODO: UI testing alert code is not yet implemented on Windows.
+#if !WINDOWS
 		[Test]
 		public void AlertCancel()
 		{
-			if (Device == TestDevice.Windows)
-				Assert.Ignore("UI testing alert code is not yet implemented on Windows.");
-
 			var test = Test.Alerts.AlertCancel;
 
 			var remote = new EventViewContainerRemote(UITestContext, test);
 			remote.GoTo(test.ToString());
 
 			var textBeforeClick = remote.GetEventLabel().GetText();
-			Assert.AreEqual($"Event: {test} (none)", textBeforeClick);
+			ClassicAssert.AreEqual($"Event: {test} (none)", textBeforeClick);
 
 			remote.TapView();
 
 			var alert = App.WaitForElement(() => App.GetAlert());
-			Assert.NotNull(alert);
+			ClassicAssert.NotNull(alert);
 
 			var alertText = alert.GetAlertText();
 			CollectionAssert.Contains(alertText, "Alert Title Here");
@@ -43,17 +41,17 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var buttons = alert.GetAlertButtons();
 			CollectionAssert.IsNotEmpty(buttons);
-			Assert.True(buttons.Count == 1, $"Expected 1 buttonText, found {buttons.Count}.");
+			ClassicAssert.True(buttons.Count == 1, $"Expected 1 buttonText, found {buttons.Count}.");
 
 			var cancel = buttons.First();
-			Assert.AreEqual("CANCEL", cancel.GetText());
+			ClassicAssert.AreEqual("CANCEL", cancel.GetText());
 
 			cancel.Click();
 
 			App.WaitForNoElement(() => App.GetAlert());
 
 			var textAfterClick = remote.GetEventLabel().GetText();
-			Assert.AreEqual($"Event: {test} (SUCCESS 1)", textAfterClick);
+			ClassicAssert.AreEqual($"Event: {test} (SUCCESS 1)", textAfterClick);
 		}
 
 		[Test]
@@ -61,19 +59,16 @@ namespace Microsoft.Maui.TestCases.Tests
 		[TestCase(Test.Alerts.AlertAcceptCancelClickCancel, "CANCEL")]
 		public void AlertAcceptCancel(Test.Alerts test, string buttonText)
 		{
-			if (Device == TestDevice.Windows)
-				Assert.Ignore("UI testing alert code is not yet implemented on Windows.");
-
 			var remote = new EventViewContainerRemote(UITestContext, test);
 			remote.GoTo(test.ToString());
 
 			var textBeforeClick = remote.GetEventLabel().GetText();
-			Assert.AreEqual($"Event: {test} (none)", textBeforeClick);
+			ClassicAssert.AreEqual($"Event: {test} (none)", textBeforeClick);
 
 			remote.TapView();
 
 			var alert = App.WaitForElement(() => App.GetAlert());
-			Assert.NotNull(alert);
+			ClassicAssert.NotNull(alert);
 
 			var alertText = alert.GetAlertText();
 			CollectionAssert.Contains(alertText, "Alert Title Here");
@@ -83,7 +78,7 @@ namespace Microsoft.Maui.TestCases.Tests
 				.Select(b => (Element: b, Text: b.GetText()))
 				.ToList();
 			CollectionAssert.IsNotEmpty(buttons);
-			Assert.True(buttons.Count == 2, $"Expected 2 buttons, found {buttons.Count}.");
+			ClassicAssert.True(buttons.Count == 2, $"Expected 2 buttons, found {buttons.Count}.");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "ACCEPT");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "CANCEL");
 
@@ -93,7 +88,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForNoElement(() => App.GetAlert());
 
 			var textAfterClick = remote.GetEventLabel().GetText();
-			Assert.AreEqual($"Event: {test} (SUCCESS 1)", textAfterClick);
+			ClassicAssert.AreEqual($"Event: {test} (SUCCESS 1)", textAfterClick);
 		}
 
 		[Test]
@@ -102,19 +97,16 @@ namespace Microsoft.Maui.TestCases.Tests
 		[TestCase(Test.Alerts.ActionSheetClickDestroy, "DESTROY")]
 		public void ActionSheetClickItem(Test.Alerts test, string itemText)
 		{
-			if (Device == TestDevice.Windows)
-				Assert.Ignore("UI testing alert code is not yet implemented on Windows.");
-
 			var remote = new EventViewContainerRemote(UITestContext, test);
 			remote.GoTo(test.ToString());
 
 			var textBeforeClick = remote.GetEventLabel().GetText();
-			Assert.AreEqual($"Event: {test} (none)", textBeforeClick);
+			ClassicAssert.AreEqual($"Event: {test} (none)", textBeforeClick);
 
 			remote.TapView();
 
 			var alert = App.WaitForElement(() => App.GetAlert());
-			Assert.NotNull(alert);
+			ClassicAssert.NotNull(alert);
 
 			var alertText = alert.GetAlertText();
 			CollectionAssert.Contains(alertText, "Action Sheet Title Here");
@@ -123,7 +115,7 @@ namespace Microsoft.Maui.TestCases.Tests
 				.Select(b => (Element: b, Text: b.GetText()))
 				.ToList();
 			CollectionAssert.IsNotEmpty(buttons);
-			Assert.True(buttons.Count == 5, $"Expected 5 buttons, found {buttons.Count}.");
+			ClassicAssert.True(buttons.Count == 5, $"Expected 5 buttons, found {buttons.Count}.");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "CANCEL");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "DESTROY");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "ITEM 1");
@@ -136,7 +128,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForNoElement(() => App.GetAlert());
 
 			var textAfterClick = remote.GetEventLabel().GetText();
-			Assert.AreEqual($"Event: {test} (SUCCESS 1)", textAfterClick);
+			ClassicAssert.AreEqual($"Event: {test} (SUCCESS 1)", textAfterClick);
 		}
+#endif
 	}
 }
