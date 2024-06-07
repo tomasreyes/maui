@@ -33,12 +33,6 @@ parameters:
       legacyiOSApp: /optional/path/to/app.csproj
 
 stages:
-  strategy:
-    matrix:
-      categoriesToTest:
-        - ${{ each category in parameters.categoriesToTest }}:
-          - '${{ category }}'
-            Category: ${{ category }}
 
   - stage: android_ui_tests
     displayName: Android UITests
@@ -50,6 +44,11 @@ stages:
             - ${{ if not(containsValue(project.androidApiLevelsExclude, api)) }}:
               - ${{ each category in parameters.categoriesToTest }}:
                 - job: android_ui_tests_${{ project.name }}_${{ api }}
+                  strategy:
+                    matrix:
+                      ${{ each category in parameters.categoriesToTest }}:
+                        ${{ category }}:
+                          CATEGORY: ${{ category }}
                   timeoutInMinutes: 240 # how long to run the job before automatically cancelling
                   workspace:
                     clean: all
@@ -71,7 +70,7 @@ stages:
                           device: android-emulator-64_${{ api }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: 'TestCategory=$(Category)'
+                        testFilter: 'TestCategory=$(CATEGORY)'
 
   - stage: ios_ui_tests
     displayName: iOS UITests
