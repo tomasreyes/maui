@@ -1,3 +1,6 @@
+variables:
+  categoriesToTest: [ 'Accessibility','ActionSheet','ActivityIndicator','Animation','AppLinks','AutomationID','Border','BoxView','Brush','Button','CarouselView','Cells','CheckBox','CollectionView','ContextActions','CustomRenderers','DatePicker','DisplayAlert','DisplayPrompt','DragAndDrop','Editor','Effects','Entry','FlyoutPage','Focus','Frame','Gestures','Image','ImageButton','IndicatorView','InputTransparent','IsEnabled','Label','Layout','Lifecycle','ListView','ManualReview','Maps','Navigation','Page','Performance','Picker','ProgressBar','RadioButton','RefreshView','ScrollView','SearchBar','Shape','Shell','Slider','Stepper','Switch','SwipeView','TabbedPage','TableView','TimePicker','TitleView','ToolbarItem','ViewBaseTests','Visual','WebView','Window' ]
+
 parameters:
   androidPool: { }
   iosPool: { }
@@ -32,6 +35,12 @@ parameters:
       legacyiOSApp: /optional/path/to/app.csproj
 
 stages:
+  strategy:
+    matrix:
+      categoriesToTest:
+        - ${{ each category in variables.categoriesToTest }}:
+          - '${{ category }}'
+            Category: ${{ category }}
 
   - stage: android_ui_tests
     displayName: Android UITests
@@ -64,7 +73,7 @@ stages:
                           device: android-emulator-64_${{ api }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: 'TestCategory=${{ category }}'
+                        testFilter: 'TestCategory=$(Category)'
 
   - stage: ios_ui_tests
     displayName: iOS UITests
@@ -99,7 +108,7 @@ stages:
                         device: ios-simulator-64_${{ version }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                      testFilter: ${{ parameters.testFilter }}
+                      testFilter: 'TestCategory=$(Category)'
 
   - stage: winui_ui_tests
     displayName: WinUI UITests
@@ -125,7 +134,7 @@ stages:
                       app: ${{ project.app }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                      testFilter: ${{ parameters.testFilter }}
+                      testFilter: 'TestCategory=$(Category)'
 
   - stage: mac_ui_tests
     displayName: macOS UITests
@@ -152,7 +161,7 @@ stages:
                       app: ${{ project.app }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                      testFilter: ${{ parameters.testFilter }}
+                      testFilter: 'TestCategory=$(Category)'
 
   - ${{ if eq(parameters.runCompatibilityTests, true) }}:  
     - stage: android_compatibility_ui_tests
@@ -187,7 +196,7 @@ stages:
                           DEVICE: android-emulator-64_${{ api }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: ${{ parameters.testFilter }}
+                        testFilter: 'TestCategory=$(Category)'
 
     - stage: ios_compatibility_ui_tests
       displayName: iOS Compatibility UITests
@@ -224,7 +233,7 @@ stages:
                           device: ios-simulator-64_${{ version }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: ${{ parameters.testFilter }}
+                        testFilter: 'TestCategory=$(Category)'
 
   - ${{ if eq(parameters.runLegacyTests, true) }}:  
     - stage: android_legacy_ui_tests
@@ -258,7 +267,7 @@ stages:
                           device: android-emulator-64_${{ api }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: ${{ parameters.testFilter }}
+                        testFilter: 'TestCategory=$(Category)'
 
     - stage: ios_legacy_ui_tests
       displayName: iOS Legacy UITests
@@ -294,4 +303,4 @@ stages:
                           device: ios-simulator-64_${{ version }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: ${{ parameters.testFilter }}
+                        testFilter: 'TestCategory=$(Category)'
