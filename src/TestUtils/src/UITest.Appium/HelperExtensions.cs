@@ -309,7 +309,7 @@ namespace UITest.Appium
 		}
 
 		/// <summary>
-		/// Return the currently presented alert.
+		/// Return the currently presented alert or action sheet.
 		/// </summary>
 		/// <param name="app">Represents the main gateway to interact with an app.</param>
 		public static IUIElement? GetAlert(this IApp app)
@@ -318,7 +318,7 @@ namespace UITest.Appium
 		}
 
 		/// <summary>
-		/// Return the currently presented alerts.
+		/// Return the currently presented alerts or action sheets.
 		/// </summary>
 		/// <param name="app">Represents the main gateway to interact with an app.</param>
 		public static IReadOnlyCollection<IUIElement> GetAlerts(this IApp app)
@@ -328,9 +328,9 @@ namespace UITest.Appium
 		}
 
 		/// <summary>
-		/// Return the buttons in the alert.
+		/// Return the buttons in the alert or action sheet.
 		/// </summary>
-		/// <param name="alertElement">The element that represents the alert.</param>
+		/// <param name="alertElement">The element that represents the alert or action sheet.</param>
 		public static IReadOnlyCollection<IUIElement> GetAlertButtons(this IUIElement alertElement)
 		{
 			var result = alertElement.Command.Execute("getAlertButtons", new Dictionary<string, object>
@@ -341,9 +341,9 @@ namespace UITest.Appium
 		}
 
 		/// <summary>
-		/// Return the text messages in the alert.
+		/// Return the text messages in the alert or action sheet.
 		/// </summary>
-		/// <param name="alertElement">The element that represents the alert.</param>
+		/// <param name="alertElement">The element that represents the alert or action sheet.</param>
 		public static IReadOnlyCollection<string> GetAlertText(this IUIElement alertElement)
 		{
 			var result = alertElement.Command.Execute("getAlertText", new Dictionary<string, object>
