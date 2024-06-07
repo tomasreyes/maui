@@ -324,7 +324,7 @@ namespace UITest.Appium
 		public static IReadOnlyCollection<IUIElement> GetAlerts(this IApp app)
 		{
 			var result = app.CommandExecutor.Execute("getAlerts", ImmutableDictionary<string, object>.Empty);
-			return (IReadOnlyCollection<IUIElement>?)result.Value?? Array.Empty<IUIElement>();
+			return (IReadOnlyCollection<IUIElement>?)result.Value ?? Array.Empty<IUIElement>();
 		}
 
 		/// <summary>
