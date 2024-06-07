@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using Windows.Storage.Streams;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Maui.Handlers
 {
@@ -36,16 +32,20 @@ namespace Microsoft.Maui.Handlers
 
 		protected override WebView2 CreatePlatformView()
 		{
+#if DEBUG
 			var logger = this.MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
 			logger.LogInformation("HybridWebViewHandler: CreatePlatformView WebView2");
+#endif
 
 			return new HybridPlatformWebView(this);
 		}
 
 		protected override async void ConnectHandler(WebView2 platformView)
 		{
+#if DEBUG
 			var logger = this.MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
 			logger.LogInformation("HybridWebViewHandler: Connecting WebView2");
+#endif
 
 			base.ConnectHandler(platformView);
 
@@ -66,57 +66,16 @@ namespace Microsoft.Maui.Handlers
 
 		protected override void DisconnectHandler(WebView2 platformView)
 		{
+#if DEBUG
 			var logger = this.MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
 			logger.LogInformation("HybridWebViewHandler: Disconnecting WebView2");
+#endif
+
+			platformView.WebMessageReceived -= OnWebMessageReceived;
+			platformView.Close();
 
 			base.DisconnectHandler(platformView);
 		}
-		//protected override void ConnectHandler(WebView2 platformView)
-		//{
-		//	_proxy.Connect(this, platformView);
-		//	base.ConnectHandler(platformView);
-
-		//	if (platformView.IsLoaded)
-		//		OnLoaded();
-		//	else
-		//		platformView.Loaded += OnWebViewLoaded;
-		//}
-
-		//void OnWebViewLoaded(object sender, RoutedEventArgs e)
-		//{
-		//	OnLoaded();
-		//}
-
-		//void OnLoaded()
-		//{
-		//	_window = MauiContext!.GetPlatformWindow();
-		//	_window.Closed += OnWindowClosed;
-		//}
-
-		//private void OnWindowClosed(object sender, WindowEventArgs args)
-		//{
-		//	Disconnect(PlatformView);
-		//}
-
-		//void Disconnect(WebView2 platformView)
-		//{
-		//	if (_window is not null)
-		//	{
-		//		_window.Closed -= OnWindowClosed;
-		//		_window = null;
-		//	}
-
-		//	platformView.Loaded -= OnWebViewLoaded;
-		//	_proxy.Disconnect(platformView);
-		//	platformView.Close();
-		//}
-
-		//protected override void DisconnectHandler(WebView2 platformView)
-		//{
-		//	Disconnect(platformView);
-		//	base.DisconnectHandler(platformView);
-		//}
-
 
 		public static void MapSendRawMessage(IHybridWebViewHandler handler, IHybridWebView hybridWebView, object? arg)
 		{
