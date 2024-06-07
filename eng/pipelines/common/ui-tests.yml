@@ -80,6 +80,11 @@ stages:
           - ${{ each version in parameters.iosVersions }}:
             - ${{ if not(containsValue(project.iosVersionsExclude, version)) }}:
               - job: ios_ui_tests_${{ project.name }}_${{ replace(version, '.', '_') }}
+                strategy:
+                  matrix:
+                    ${{ each category in parameters.categoriesToTest }}:
+                      ${{ category }}:
+                        CATEGORY: ${{ category }}
                 timeoutInMinutes: 240 # how long to run the job before automatically cancelling
                 workspace:
                   clean: all
@@ -104,7 +109,7 @@ stages:
                         device: ios-simulator-64_${{ version }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                      testFilter: 'TestCategory=$(Category)'
+                      testFilter: 'TestCategory=$(CATEGORY)'
 
   - stage: winui_ui_tests
     displayName: WinUI UITests
@@ -113,6 +118,11 @@ stages:
       - ${{ each project in parameters.projects }}:
         - ${{ if ne(project.winui, '') }}:
               - job: winui_ui_tests_${{ project.name }}
+                strategy:
+                  matrix:
+                    ${{ each category in parameters.categoriesToTest }}:
+                      ${{ category }}:
+                        CATEGORY: ${{ category }}
                 timeoutInMinutes: 240 # how long to run the job before automatically cancelling
                 workspace:
                   clean: all
@@ -130,7 +140,7 @@ stages:
                       app: ${{ project.app }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                      testFilter: 'TestCategory=$(Category)'
+                      testFilter: 'TestCategory=$(CATEGORY)'
 
   - stage: mac_ui_tests
     displayName: macOS UITests
@@ -139,6 +149,11 @@ stages:
       - ${{ each project in parameters.projects }}:
         - ${{ if ne(project.mac, '') }}:
               - job: mac_ui_tests_${{ project.name }}
+                strategy:
+                  matrix:
+                    ${{ each category in parameters.categoriesToTest }}:
+                      ${{ category }}:
+                        CATEGORY: ${{ category }}
                 timeoutInMinutes: 240 # how long to run the job before automatically cancelling
                 workspace:
                   clean: all
@@ -157,7 +172,7 @@ stages:
                       app: ${{ project.app }}
                       provisionatorChannel: ${{ parameters.provisionatorChannel }}
                       agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                      testFilter: 'TestCategory=$(Category)'
+                      testFilter: 'TestCategory=$(CATEGORY)'
 
   - ${{ if eq(parameters.runCompatibilityTests, true) }}:  
     - stage: android_compatibility_ui_tests
@@ -169,6 +184,11 @@ stages:
             - ${{ each api in parameters.androidApiLevels }}:
               - ${{ if not(containsValue(project.androidApiLevelsExclude, api)) }}:
                 - job: android_compatibility_ui_tests_${{ project.name }}_${{ api }}
+                  strategy:
+                  matrix:
+                    ${{ each category in parameters.categoriesToTest }}:
+                      ${{ category }}:
+                        CATEGORY: ${{ category }}
                   timeoutInMinutes: 240
                   workspace:
                     clean: all
@@ -192,7 +212,7 @@ stages:
                           DEVICE: android-emulator-64_${{ api }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: 'TestCategory=$(Category)'
+                        testFilter: 'TestCategory=$(CATEGORY)'
 
     - stage: ios_compatibility_ui_tests
       displayName: iOS Compatibility UITests
@@ -203,6 +223,11 @@ stages:
             - ${{ each version in parameters.iosVersions }}:
               - ${{ if not(containsValue(project.iosVersionsExclude, version)) }}:
                 - job: ios_compatibility_ui_tests_${{ project.name }}_${{ replace(version, '.', '_') }}
+                  strategy:
+                  matrix:
+                    ${{ each category in parameters.categoriesToTest }}:
+                      ${{ category }}:
+                        CATEGORY: ${{ category }}
                   timeoutInMinutes: 240
                   workspace:
                     clean: all
@@ -229,7 +254,7 @@ stages:
                           device: ios-simulator-64_${{ version }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: 'TestCategory=$(Category)'
+                        testFilter: 'TestCategory=$(CATEGORY)'
 
   - ${{ if eq(parameters.runLegacyTests, true) }}:  
     - stage: android_legacy_ui_tests
@@ -241,6 +266,11 @@ stages:
             - ${{ each api in parameters.androidApiLevels }}:
               - ${{ if not(containsValue(project.androidApiLevelsExclude, api)) }}:
                 - job: android_legacy_ui_tests_${{ project.name }}_${{ api }}
+                  strategy:
+                  matrix:
+                    ${{ each category in parameters.categoriesToTest }}:
+                      ${{ category }}:
+                        CATEGORY: ${{ category }}
                   timeoutInMinutes: 240
                   workspace:
                     clean: all
@@ -263,7 +293,7 @@ stages:
                           device: android-emulator-64_${{ api }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: 'TestCategory=$(Category)'
+                        testFilter: 'TestCategory=$(CATEGORY)'
 
     - stage: ios_legacy_ui_tests
       displayName: iOS Legacy UITests
@@ -274,6 +304,11 @@ stages:
             - ${{ each version in parameters.iosVersions }}:
               - ${{ if not(containsValue(project.iosVersionsExclude, version)) }}:
                 - job: ios_legacy_ui_tests_${{ project.name }}_${{ replace(version, '.', '_') }}
+                  strategy:
+                  matrix:
+                    ${{ each category in parameters.categoriesToTest }}:
+                      ${{ category }}:
+                        CATEGORY: ${{ category }}
                   timeoutInMinutes: 240
                   workspace:
                     clean: all
@@ -299,4 +334,4 @@ stages:
                           device: ios-simulator-64_${{ version }}
                         provisionatorChannel: ${{ parameters.provisionatorChannel }}
                         agentPoolAccessToken: ${{ parameters.agentPoolAccessToken }}
-                        testFilter: 'TestCategory=$(Category)'
+                        testFilter: 'TestCategory=$(CATEGORY)'
