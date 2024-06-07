@@ -3,7 +3,5 @@
 	public interface IHybridPlatformWebView
 	{
 		void SendRawMessage(string rawMessage);
-		void SetHybridRoot(string? hybridRoot);
-
 	}
 }

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Microsoft.Maui.Controls
 {
@@ -14,16 +13,23 @@ namespace Microsoft.Maui.Controls
 	/// </summary>
 	public class HybridWebView : View, IHybridWebView
 	{
+		/// <summary>Bindable property for <see cref="DefaultFile"/>.</summary>
+		public static readonly BindableProperty DefaultFileProperty =
+			BindableProperty.Create(nameof(DefaultFile), typeof(string), typeof(HybridWebView), defaultValue: "index.html");
 		/// <summary>Bindable property for <see cref="HybridRoot"/>.</summary>
 		public static readonly BindableProperty HybridRootProperty =
 			BindableProperty.Create(nameof(HybridRoot), typeof(string), typeof(HybridWebView), defaultValue: "HybridRoot");
 
-		///// <summary>
-		///// Specifies the file within the <see cref="HybridAssetRoot"/> that should be served as the main file. The
-		///// default value is <c>index.html</c>.
-		///// </summary>
-		//public string? MainFile { get; set; } = "index.html";
-		//private string? MainFile = "index.html";
+
+		/// <summary>
+		/// Specifies the file within the <see cref="HybridRoot"/> that should be served as the default file. The
+		/// default value is <c>index.html</c>.
+		/// </summary>
+		public string? DefaultFile
+		{
+			get { return (string)GetValue(DefaultFileProperty); }
+			set { SetValue(DefaultFileProperty, value); }
+		}
 
 		///// <summary>
 		///// Gets or sets the path for initial navigation after the content is finished loading. The default value is <c>/</c>.

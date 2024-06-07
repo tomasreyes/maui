@@ -24,24 +24,13 @@ namespace Microsoft.Maui.Handlers
 	{
         public static IPropertyMapper<IHybridWebView, IHybridWebViewHandler> Mapper = new PropertyMapper<IHybridWebView, IHybridWebViewHandler>(ViewHandler.ViewMapper)
         {
+            [nameof(IHybridWebView.DefaultFile)] = MapDefaultFile,
             [nameof(IHybridWebView.HybridRoot)] = MapHybridRoot,
-//            [nameof(IWebView.UserAgent)] = MapUserAgent,
-//#if __ANDROID__
-//			[nameof(WebViewClient)] = MapWebViewClient,
-//			[nameof(WebChromeClient)] = MapWebChromeClient,
-//			[nameof(WebView.Settings)] =  MapWebViewSettings
-//#elif __IOS__
-//			[nameof(WKUIDelegate)] = MapWKUIDelegate,
-//#endif
-        };
+		};
 
         public static CommandMapper<IHybridWebView, IHybridWebViewHandler> CommandMapper = new(ViewCommandMapper)
         {
             [nameof(IHybridWebView.SendRawMessage)] = MapSendRawMessage,
-            //[nameof(IWebView.GoForward)] = MapGoForward,
-            //[nameof(IWebView.Reload)] = MapReload,
-            //[nameof(IWebView.Eval)] = MapEval,
-            //[nameof(IWebView.EvaluateJavaScriptAsync)] = MapEvaluateJavaScriptAsync,
         };
 
         public HybridWebViewHandler() : base(Mapper, CommandMapper)
@@ -57,6 +46,18 @@ namespace Microsoft.Maui.Handlers
 
         PlatformView IHybridWebViewHandler.PlatformView => PlatformView;
 
+		public static void MapDefaultFile(IHybridWebViewHandler handler, IHybridWebView hybridWebView)
+		{
+			handler.DefaultFile = hybridWebView.DefaultFile;
+		}
+
+		public static void MapHybridRoot(IHybridWebViewHandler handler, IHybridWebView hybridWebView)
+		{
+			handler.HybridRoot = hybridWebView.HybridRoot;
+		}
+
+		public string? DefaultFile { get; set; }
+		public string? HybridRoot { get; set; }
 
 		internal static async Task<string?> GetAssetContentAsync(string assetPath)
 		{

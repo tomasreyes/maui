@@ -22,7 +22,6 @@ namespace Microsoft.Maui.Handlers
 		protected override WKWebView CreatePlatformView() =>
 			null!;// new MauiWKWebView(this);
 
-		public static void MapHybridRoot(IHybridWebViewHandler handler, IHybridWebView hybridWebView) { }
 		public static void MapSendRawMessage(IHybridWebViewHandler handler, IHybridWebView hybridWebView, object? arg) { }
 
 

@@ -2,6 +2,8 @@
 {
 	public interface IHybridWebView : IView
 	{
+		string? DefaultFile { get; set; }
+
 		/// <summary>
 		///  The path within the app's "Raw" asset resources that contain the web app's contents. For example, if the
 		///  files are located in <c>[ProjectFolder]/Resources/Raw/hybrid_root</c>, then set this property to "hybrid_root".
