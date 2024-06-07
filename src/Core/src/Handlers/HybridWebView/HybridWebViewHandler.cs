@@ -17,12 +17,33 @@ using WebKit;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Maui.Storage;
+using System;
 
 namespace Microsoft.Maui.Handlers
 {
 	public partial class HybridWebViewHandler : IHybridWebViewHandler
 	{
-        public static IPropertyMapper<IHybridWebView, IHybridWebViewHandler> Mapper = new PropertyMapper<IHybridWebView, IHybridWebViewHandler>(ViewHandler.ViewMapper)
+		// Using an IP address means that the web view doesn't wait for any DNS resolution,
+		// making it substantially faster. Note that this isn't real HTTP traffic, since
+		// we intercept all the requests within this origin.
+		private static readonly string AppHostAddress = "0.0.0.0";
+
+		private static readonly string AppHostScheme =
+#if IOS || MACCATALYST
+			"app";
+#else
+			"https";
+#endif
+
+		/// <summary>
+		/// Gets the application's base URI. Defaults to <c>https://0.0.0.0/</c> on Windows and Android,
+		/// and <c>app://0.0.0.0/</c> on iOS and MacCatalyst (because <c>https</c> is reserved).
+		/// </summary>
+		private static readonly string AppOrigin = $"{AppHostScheme}://{AppHostAddress}/";
+
+		internal static readonly Uri AppOriginUri = new(AppOrigin);
+		
+		public static IPropertyMapper<IHybridWebView, IHybridWebViewHandler> Mapper = new PropertyMapper<IHybridWebView, IHybridWebViewHandler>(ViewHandler.ViewMapper)
         {
             [nameof(IHybridWebView.DefaultFile)] = MapDefaultFile,
             [nameof(IHybridWebView.HybridRoot)] = MapHybridRoot,

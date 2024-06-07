@@ -19,7 +19,7 @@
             }
             else {
                 // Android WebView
-                //hybridWebViewHost.sendMessage(message);
+                hybridWebViewHost.sendMessage(message);
             }
 
         }
@@ -29,10 +29,18 @@
             messageFromCSharp.value += '\r\n' + message;
         }
 
-        window.chrome.webview.addEventListener('message', arg => {
-            ReceiveRawMessageFromCSharp(arg.data);
-        });
-
+        if (window.chrome && window.chrome.webview) {
+            // Windows WebView2
+            window.chrome.webview.addEventListener('message', arg => {
+                ReceiveRawMessageFromCSharp(arg.data);
+            });
+        }
+        else {
+            // Android WebView
+            window.addEventListener('message', arg => {
+                ReceiveRawMessageFromCSharp(arg.data);
+            });
+        }
 
     </script>
 </head>

@@ -1,335 +1,224 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
+using System.IO;
+using System.Text;
+using Android.Content;
 using Android.Webkit;
+using Java.Interop;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using static Android.Views.ViewGroup;
 using AWebView = Android.Webkit.WebView;
+using AUri = Android.Net.Uri;
 
 namespace Microsoft.Maui.Handlers
 {
-    public partial class HybridWebViewHandler : ViewHandler<IHybridWebView, AWebView>
+	public partial class HybridWebViewHandler : ViewHandler<IHybridWebView, AWebView>
 	{
-		//internal const string AssetBaseUrl = "file:///android_asset/";
-
-		//bool _firstRun = true;
-		//readonly HashSet<string> _loadedCookies = new HashSet<string>();
-
-		//internal WebNavigationEvent _eventState;
-
-		//protected internal string? UrlCanceled { get; set; }
-
-		protected override AWebView CreatePlatformView() => null!;
-		//{
-		//	var platformView = new MauiWebView(this, Context!)
-		//	{
-		//		LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent)
-		//	};
-
-		//	platformView.Settings.JavaScriptEnabled = true;
-		//	platformView.Settings.DomStorageEnabled = true;
-		//	platformView.Settings.SetSupportMultipleWindows(true);
-
-		//	return platformView;
-		//}
-
-		public static void MapSendRawMessage(IHybridWebViewHandler handler, IHybridWebView hybridWebView, object? arg) { }
-
-
-		//internal WebNavigationEvent CurrentNavigationEvent
-		//{
-		//	get => _eventState;
-		//	set => _eventState = value;
-		//}
-
-		//public override void SetVirtualView(IView view)
-		//{
-		//	_firstRun = true;
-		//	base.SetVirtualView(view);
-		//	// At this time all the mappers were already called
-		//	_firstRun = false;
-		//	ProcessSourceWhenReady(this, VirtualView);
-		//}
-
-		//protected override void DisconnectHandler(AWebView platformView)
-		//{
-		//	if (OperatingSystem.IsAndroidVersionAtLeast(26))
-		//	{
-		//		if (platformView.WebViewClient is MauiWebViewClient webViewClient)
-		//			webViewClient.Disconnect();
-
-		//		if (platformView.WebChromeClient is MauiWebChromeClient webChromeClient)
-		//			webChromeClient.Disconnect();
-		//	}
-
-		//	platformView.SetWebViewClient(null!);
-		//	platformView.SetWebChromeClient(null);
-
-		//	platformView.StopLoading();
-
-		//	base.DisconnectHandler(platformView);
-		//}
-
-		//public static void MapSource(IWebViewHandler handler, IWebView webView)
-		//{
-		//	ProcessSourceWhenReady(handler, webView);
-		//}
-
-		//public static void MapUserAgent(IWebViewHandler handler, IWebView webView)
-		//{
-		//	handler.PlatformView.UpdateUserAgent(webView);
-		//}
-
-		//public static void MapWebViewClient(IWebViewHandler handler, IWebView webView)
-		//{
-		//	if (handler is WebViewHandler platformHandler)
-		//		handler.PlatformView.SetWebViewClient(new MauiWebViewClient(platformHandler));
-		//}
-
-		//public static void MapWebChromeClient(IWebViewHandler handler, IWebView webView)
-		//{
-		//	if (handler is WebViewHandler platformHandler)
-		//		handler.PlatformView.SetWebChromeClient(new MauiWebChromeClient(platformHandler));
-		//}
-
-		//public static void MapWebViewSettings(IWebViewHandler handler, IWebView webView)
-		//{
-		//	handler.PlatformView.UpdateSettings(webView, true, true);
-		//}
-
-		//public static void MapGoBack(IWebViewHandler handler, IWebView webView, object? arg)
-		//{
-		//	if (handler.PlatformView.CanGoBack() && handler is WebViewHandler w)
-		//		w.CurrentNavigationEvent = WebNavigationEvent.Back;
-
-		//	handler.PlatformView.UpdateGoBack(webView);
-		//}
-
-		//public static void MapGoForward(IWebViewHandler handler, IWebView webView, object? arg)
-		//{
-		//	if (handler.PlatformView.CanGoForward() && handler is WebViewHandler w)
-		//		w.CurrentNavigationEvent = WebNavigationEvent.Forward;
-
-		//	handler.PlatformView.UpdateGoForward(webView);
-		//}
-
-		//public static void MapReload(IWebViewHandler handler, IWebView webView, object? arg)
-		//{
-		//	if (handler is WebViewHandler w)
-		//		w.CurrentNavigationEvent = WebNavigationEvent.Refresh;
-
-		//	handler.PlatformView.UpdateReload(webView);
-
-		//	string? url = handler.PlatformView.Url?.ToString();
-
-		//	if (url == null)
-		//		return;
-
-		//	if (handler is WebViewHandler platformHandler)
-		//		platformHandler.SyncPlatformCookies(url);
-		//}
-
-		//public static void MapEval(IWebViewHandler handler, IWebView webView, object? arg)
-		//{
-		//	if (arg is not string script)
-		//		return;
-
-		//	handler.PlatformView?.Eval(webView, script);
-		//}
-
-		//public static void MapEvaluateJavaScriptAsync(IWebViewHandler handler, IWebView webView, object? arg)
-		//{
-		//	if (arg is EvaluateJavaScriptAsyncRequest request)
-		//	{
-		//		handler.PlatformView.EvaluateJavaScript(request);
-		//	}
-		//}
-
-		//protected internal bool NavigatingCanceled(string? url)
-		//{
-		//	if (VirtualView == null || string.IsNullOrWhiteSpace(url))
-		//		return true;
-
-		//	if (url == AssetBaseUrl)
-		//		return false;
-
-		//	SyncPlatformCookies(url);
-		//	bool cancel = VirtualView.Navigating(CurrentNavigationEvent, url);
-
-		//	// if the user disconnects from the handler we want to exit
-		//	if (!PlatformView.IsAlive())
-		//		return true;
-
-		//	PlatformView?.UpdateCanGoBackForward(VirtualView);
-
-		//	UrlCanceled = cancel ? null : url;
-
-		//	return cancel;
-		//}
-
-		//static void ProcessSourceWhenReady(IWebViewHandler handler, IWebView webView)
-		//{
-		//	//We want to load the source after making sure the mapper for webclients
-		//	//and settings were called already
-		//	var platformHandler = handler as WebViewHandler;
-		//	if (platformHandler == null || platformHandler._firstRun)
-		//		return;
-
-		//	IWebViewDelegate? webViewDelegate = handler.PlatformView as IWebViewDelegate;
-		//	handler.PlatformView?.UpdateSource(webView, webViewDelegate);
-		//}
-
-		//internal void SyncPlatformCookiesToVirtualView(string url)
-		//{
-		//	var myCookieJar = VirtualView.Cookies;
-
-		//	if (myCookieJar == null)
-		//		return;
-
-		//	var uri = CreateUriForCookies(url);
-
-		//	if (uri == null)
-		//		return;
-
-		//	var cookies = myCookieJar.GetCookies(uri);
-		//	var retrieveCurrentWebCookies = GetCookiesFromPlatformStore(url);
-
-		//	if (retrieveCurrentWebCookies == null)
-		//		return;
-
-		//	foreach (Cookie cookie in cookies)
-		//	{
-		//		var platformCookie = retrieveCurrentWebCookies[cookie.Name];
-
-		//		if (platformCookie == null)
-		//			cookie.Expired = true;
-		//		else
-		//			cookie.Value = platformCookie.Value;
-		//	}
-
-		//	SyncPlatformCookies(url);
-		//}
-
-		//void SyncPlatformCookies(string url)
-		//{
-		//	var uri = CreateUriForCookies(url);
-
-		//	if (uri == null)
-		//		return;
-
-		//	var myCookieJar = VirtualView.Cookies;
-
-		//	if (myCookieJar == null)
-		//		return;
-
-		//	InitialCookiePreloadIfNecessary(url);
-		//	var cookies = myCookieJar.GetCookies(uri);
-
-		//	if (cookies == null)
-		//		return;
-
-		//	var retrieveCurrentWebCookies = GetCookiesFromPlatformStore(url);
-
-		//	if (retrieveCurrentWebCookies == null)
-		//		return;
-
-		//	var cookieManager = CookieManager.Instance;
-
-		//	if (cookieManager == null)
-		//		return;
-
-		//	cookieManager.SetAcceptCookie(true);
-		//	for (var i = 0; i < cookies.Count; i++)
-		//	{
-		//		var cookie = cookies[i];
-		//		var cookieString = cookie.ToString();
-		//		cookieManager.SetCookie(cookie.Domain, cookieString);
-		//	}
-
-		//	foreach (Cookie cookie in retrieveCurrentWebCookies)
-		//	{
-		//		if (cookies[cookie.Name] != null)
-		//			continue;
-
-		//		var cookieString = $"{cookie.Name}=; max-age=0;expires=Sun, 31 Dec 2017 00:00:00 UTC";
-		//		cookieManager.SetCookie(cookie.Domain, cookieString);
-		//	}
-		//}
-
-		//void InitialCookiePreloadIfNecessary(string url)
-		//{
-		//	var myCookieJar = VirtualView.Cookies;
-
-		//	if (myCookieJar == null)
-		//		return;
-
-		//	var uri = CreateUriForCookies(url);
-
-		//	if (uri == null)
-		//		return;
-
-		//	if (!_loadedCookies.Add(uri.Host))
-		//		return;
-
-		//	var cookies = myCookieJar.GetCookies(uri);
-
-		//	if (cookies != null)
-		//	{
-		//		var existingCookies = GetCookiesFromPlatformStore(url);
-
-		//		if (existingCookies != null)
-		//		{
-		//			foreach (Cookie cookie in existingCookies)
-		//			{
-		//				if (cookies[cookie.Name] == null)
-		//					myCookieJar.Add(cookie);
-		//			}
-		//		}
-		//	}
-		//}
-
-		//static CookieCollection? GetCookiesFromPlatformStore(string url)
-		//{
-		//	CookieContainer existingCookies = new CookieContainer();
-		//	var cookieManager = CookieManager.Instance;
-
-		//	if (cookieManager == null)
-		//		return null;
-
-		//	var currentCookies = cookieManager.GetCookie(url);
-
-		//	var uri = CreateUriForCookies(url);
-
-		//	if (uri == null)
-		//		return null;
-
-		//	if (currentCookies != null)
-		//	{
-		//		foreach (var cookie in currentCookies.Split(';'))
-		//			existingCookies.SetCookies(uri, cookie);
-		//	}
-
-		//	return existingCookies.GetCookies(uri);
-		//}
-
-		//static Uri? CreateUriForCookies(string url)
-		//{
-		//	if (url == null)
-		//		return null;
-
-		//	Uri? uri;
-
-		//	if (url.Length > 2000)
-		//		url = url.Substring(0, 2000);
-
-		//	if (Uri.TryCreate(url, UriKind.Absolute, out uri))
-		//	{
-		//		if (string.IsNullOrWhiteSpace(uri.Host))
-		//			return null;
-
-		//		return uri;
-		//	}
-
-		//	return null;
-		//}
+		private HybridWebViewJavaScriptInterface? _javaScriptInterface;
+
+		protected override AWebView CreatePlatformView()
+		{
+#if DEBUG
+			var logger = MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
+			logger.LogInformation("HybridWebViewHandler: CreatePlatformView Android WebView");
+#endif
+			var platformView = new HybridPlatformWebView(this, Context!)
+			{
+				LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent)
+			};
+
+			platformView.Settings.DomStorageEnabled = true;
+			platformView.Settings.SetSupportMultipleWindows(true);
+
+			// Note that this is a per-app setting and not per-control, so if you enable
+			// this, it is enabled for all Android WebViews in the app.
+			AWebView.SetWebContentsDebuggingEnabled(enabled: true); // TODO: Get from setting
+
+			platformView.Settings.JavaScriptEnabled = true;
+
+			_javaScriptInterface = new HybridWebViewJavaScriptInterface(this);
+			platformView.AddJavascriptInterface(_javaScriptInterface, "hybridWebViewHost");
+
+			return platformView;
+		}
+
+		private sealed class HybridWebViewJavaScriptInterface : Java.Lang.Object
+		{
+			private readonly HybridWebViewHandler _hybridWebViewHandler;
+
+			public HybridWebViewJavaScriptInterface(HybridWebViewHandler hybridWebViewHandler)
+			{
+				_hybridWebViewHandler = hybridWebViewHandler;
+			}
+
+			[JavascriptInterface]
+			[Export("sendMessage")]
+			public void SendMessage(string message)
+			{
+				_hybridWebViewHandler.VirtualView?.RawMessageReceived(message);
+			}
+		}
+
+		protected override void ConnectHandler(AWebView platformView)
+		{
+#if DEBUG
+			var logger = MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
+			logger.LogInformation("HybridWebViewHandler: Connecting WebView2");
+#endif
+
+			base.ConnectHandler(platformView);
+
+			var webViewClient = new AndroidHybridWebViewClient(this);
+			PlatformView.SetWebViewClient(webViewClient);
+
+			platformView.LoadUrl(new Uri(AppOriginUri, "/").ToString());
+		}
+
+		protected override void DisconnectHandler(AWebView platformView)
+		{
+#if DEBUG
+			var logger = MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
+			logger.LogInformation("HybridWebViewHandler: Disconnecting WebView2");
+#endif
+
+			// TODO: Consider this code from WebView
+			//if (OperatingSystem.IsAndroidVersionAtLeast(26))
+			//{
+			//	if (platformView.WebViewClient is MauiWebViewClient webViewClient)
+			//		webViewClient.Disconnect();
+
+			//	if (platformView.WebChromeClient is MauiWebChromeClient webChromeClient)
+			//		webChromeClient.Disconnect();
+			//}
+
+			//platformView.SetWebViewClient(null!);
+			//platformView.SetWebChromeClient(null);
+
+			//platformView.StopLoading();
+
+
+			base.DisconnectHandler(platformView);
+		}
+
+		protected class HybridPlatformWebView : AWebView, IHybridPlatformWebView
+		{
+			private readonly WeakReference<HybridWebViewHandler> _handler;
+			private static readonly AUri AndroidAppOriginUri = AUri.Parse(AppOrigin)!;
+
+			public HybridPlatformWebView(HybridWebViewHandler handler, Context context) : base(context)
+			{
+				ArgumentNullException.ThrowIfNull(handler, nameof(handler));
+				_handler = new WeakReference<HybridWebViewHandler>(handler);
+			}
+
+			public void SendRawMessage(string rawMessage)
+			{
+#pragma warning disable CA1416 // Validate platform compatibility
+				PostWebMessage(new WebMessage(rawMessage), AndroidAppOriginUri);
+#pragma warning restore CA1416 // Validate platform compatibility
+			}
+		}
+
+		public static void MapSendRawMessage(IHybridWebViewHandler handler, IHybridWebView hybridWebView, object? arg)
+		{
+			if (arg is not string rawMessage || handler.PlatformView is not IHybridPlatformWebView hybridPlatformWebView)
+			{
+				return;
+			}
+
+			hybridPlatformWebView.SendRawMessage(rawMessage);
+		}
+	}
+
+	public class AndroidHybridWebViewClient : WebViewClient
+	{
+		private readonly HybridWebViewHandler _handler;
+
+		public AndroidHybridWebViewClient(HybridWebViewHandler handler)
+		{
+			_handler = handler;
+		}
+
+		public override WebResourceResponse? ShouldInterceptRequest(AWebView? view, IWebResourceRequest? request)
+		{
+			var fullUrl = request?.Url?.ToString();
+			var requestUri = HybridWebViewQueryStringHelper.RemovePossibleQueryString(fullUrl);
+
+			if (new Uri(requestUri) is Uri uri && HybridWebViewHandler.AppOriginUri.IsBaseOf(uri))
+			{
+				var relativePath = HybridWebViewHandler.AppOriginUri.MakeRelativeUri(uri).ToString().Replace('/', '\\');
+
+				string contentType;
+				if (string.IsNullOrEmpty(relativePath))
+				{
+					relativePath = _handler.DefaultFile;
+					contentType = "text/html";
+				}
+				else
+				{
+					var requestExtension = Path.GetExtension(relativePath);
+					contentType = requestExtension switch
+					{
+						".htm" or ".html" => "text/html",
+						".js" => "application/javascript",
+						".css" => "text/css",
+						_ => "text/plain",
+					};
+				}
+
+				Stream? contentStream = null;
+
+				var assetPath = Path.Combine(_handler.HybridRoot!, relativePath!);
+				contentStream = PlatformOpenAppPackageFile(assetPath);
+
+				if (contentStream is null)
+				{
+					var notFoundContent = "Resource not found (404)";
+
+					var notFoundByteArray = Encoding.UTF8.GetBytes(notFoundContent);
+					var notFoundContentStream = new MemoryStream(notFoundByteArray);
+
+					return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found", GetHeaders("text/plain"), notFoundContentStream);
+				}
+				else
+				{
+					// TODO: We don't know the content length because Android doesn't tell us. Seems to work without it!
+					return new WebResourceResponse(contentType, "UTF-8", 200, "OK", GetHeaders(contentType), contentStream);
+				}
+			}
+			else
+			{
+				return base.ShouldInterceptRequest(view, request);
+			}
+		}
+
+		private Stream? PlatformOpenAppPackageFile(string filename)
+		{
+			filename = PathUtils.NormalizePath(filename);
+
+			try
+			{
+				return _handler.Context.Assets?.Open(filename);
+			}
+			catch (Java.IO.FileNotFoundException)
+			{
+				return null;
+			}
+		}
+
+		internal static class PathUtils
+		{
+			public static string NormalizePath(string filename) =>
+				filename
+					.Replace('\\', Path.DirectorySeparatorChar)
+					.Replace('/', Path.DirectorySeparatorChar);
+		}
+
+		private protected static IDictionary<string, string> GetHeaders(string contentType) =>
+			new Dictionary<string, string> {
+				{ "Content-Type", contentType },
+			};
 	}
 }

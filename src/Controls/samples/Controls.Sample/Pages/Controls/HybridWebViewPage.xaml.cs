@@ -17,7 +17,7 @@ namespace Maui.Controls.Sample.Pages
 
 		private void hwv_RawMessageReceived(object sender, HybridWebView.HybridWebViewRawMessageReceivedEventArgs e)
 		{
-			statusLabel.Text += e.Message;
+			Dispatcher.Dispatch(() => statusLabel.Text += e.Message);
 		}
 	}
 }

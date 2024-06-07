@@ -13,18 +13,6 @@ namespace Microsoft.Maui.Handlers
 {
 	public partial class HybridWebViewHandler : ViewHandler<IHybridWebView, WebView2>
 	{
-		// Using an IP address means that WebView2 doesn't wait for any DNS resolution,
-		// making it substantially faster. Note that this isn't real HTTP traffic, since
-		// we intercept all the requests within this origin.
-		private static readonly string AppHostAddress = "0.0.0.0";
-
-		/// <summary>
-		/// Gets the application's base URI. Defaults to <c>https://0.0.0.0/</c>
-		/// </summary>
-		private static readonly string AppOrigin = $"https://{AppHostAddress}/";
-
-		private static readonly Uri AppOriginUri = new(AppOrigin);
-
 		//WebNavigationEvent _eventState;
 		//readonly WebView2Proxy _proxy = new();
 		//readonly HashSet<string> _loadedCookies = new();
@@ -33,7 +21,7 @@ namespace Microsoft.Maui.Handlers
 		protected override WebView2 CreatePlatformView()
 		{
 #if DEBUG
-			var logger = this.MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
+			var logger = MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
 			logger.LogInformation("HybridWebViewHandler: CreatePlatformView WebView2");
 #endif
 
@@ -43,7 +31,7 @@ namespace Microsoft.Maui.Handlers
 		protected override async void ConnectHandler(WebView2 platformView)
 		{
 #if DEBUG
-			var logger = this.MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
+			var logger = MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
 			logger.LogInformation("HybridWebViewHandler: Connecting WebView2");
 #endif
 
@@ -67,7 +55,7 @@ namespace Microsoft.Maui.Handlers
 		protected override void DisconnectHandler(WebView2 platformView)
 		{
 #if DEBUG
-			var logger = this.MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
+			var logger = MauiContext!.Services!.GetService<ILogger<HybridWebViewHandler>>() ?? NullLogger<HybridWebViewHandler>.Instance;
 			logger.LogInformation("HybridWebViewHandler: Disconnecting WebView2");
 #endif
 
