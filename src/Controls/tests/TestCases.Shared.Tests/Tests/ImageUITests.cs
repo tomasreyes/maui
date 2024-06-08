@@ -45,6 +45,7 @@ internal class ImageUITests : _ViewUITests
 		VerifyScreenshot("ImageUITests_IsAnimationPlaying_No");
 
 		remote.TapStateButton();
+		await Task.Delay(500); // make sure the gif IS playing
 		VerifyScreenshot("ImageUITests_IsAnimationPlaying_Yes");
 	}
 }
