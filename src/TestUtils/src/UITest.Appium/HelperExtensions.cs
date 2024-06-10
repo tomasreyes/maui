@@ -328,6 +328,18 @@ namespace UITest.Appium
 		}
 
 		/// <summary>
+		/// Dismisses the alert.
+		/// </summary>
+		/// <param name="alertElement">The element that represents the alert or action sheet.</param>
+		public static void DismissAlert(this IUIElement alertElement)
+		{
+			alertElement.Command.Execute("dismissAlert", new Dictionary<string, object>
+			{
+				["element"] = alertElement
+			});
+		}
+
+		/// <summary>
 		/// Return the buttons in the alert or action sheet.
 		/// </summary>
 		/// <param name="alertElement">The element that represents the alert or action sheet.</param>

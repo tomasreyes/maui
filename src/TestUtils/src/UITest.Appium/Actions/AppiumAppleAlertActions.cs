@@ -15,28 +15,25 @@ public abstract class AppiumAppleAlertActions : ICommandExecutionGroup
 		GetAlertButtonsCommand,
 		GetAlertTextCommand,
 	};
-	readonly AppiumApp _appiumApp;
+
+	protected readonly AppiumApp _appiumApp;
 
 	public AppiumAppleAlertActions(AppiumApp appiumApp)
 	{
 		_appiumApp = appiumApp;
 	}
 
-	public bool IsCommandSupported(string commandName)
-	{
-		return _commands.Contains(commandName, StringComparer.OrdinalIgnoreCase);
-	}
+	public virtual bool IsCommandSupported(string commandName) =>
+		_commands.Contains(commandName, StringComparer.OrdinalIgnoreCase);
 
-	public CommandResponse Execute(string commandName, IDictionary<string, object> parameters)
-	{
-		return commandName switch
+	public virtual CommandResponse Execute(string commandName, IDictionary<string, object> parameters) =>
+		commandName switch
 		{
 			GetAlertsCommand => GetAlerts(parameters),
 			GetAlertButtonsCommand => GetAlertButtons(parameters),
 			GetAlertTextCommand => GetAlertText(parameters),
 			_ => CommandResponse.FailedEmptyResponse,
 		};
-	}
 
 	protected abstract IReadOnlyCollection<IUIElement> OnGetAlerts(AppiumApp appiumApp, IDictionary<string, object> parameters);
 
@@ -73,7 +70,7 @@ public abstract class AppiumAppleAlertActions : ICommandExecutionGroup
 		return new CommandResponse(strings, CommandResponseResult.Success);
 	}
 
-	static AppiumElement? GetAppiumElement(object element) =>
+	protected static AppiumElement? GetAppiumElement(object element) =>
 		element switch
 		{
 			AppiumElement appiumElement => appiumElement,

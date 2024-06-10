@@ -115,15 +115,29 @@ namespace Microsoft.Maui.TestCases.Tests
 				.Select(b => (Element: b, Text: b.GetText()))
 				.ToList();
 			CollectionAssert.IsNotEmpty(buttons);
-			ClassicAssert.True(buttons.Count == 5, $"Expected 5 buttons, found {buttons.Count}.");
-			CollectionAssert.Contains(buttons.Select(b => b.Text), "CANCEL");
+			ClassicAssert.True(buttons.Count >= 4 && buttons.Count <= 5, $"Expected 4 or 5 buttons, found {buttons.Count}.");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "DESTROY");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "ITEM 1");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "ITEM 2");
 			CollectionAssert.Contains(buttons.Select(b => b.Text), "ITEM 3");
 
-			var button = buttons.Single(b => b.Text == itemText);
-			button.Element.Click();
+			// handle the case where the dismiss button is an actual button
+			if (buttons.Count == 5)
+				CollectionAssert.Contains(buttons.Select(b => b.Text), "CANCEL");
+
+			if (buttons.Count == 4 && itemText == "CANCEL")
+			{
+				// handle the case where the dismiss button is a "click outside the popup"
+
+				alert.DismissAlert();
+			}
+			else
+			{
+				// handle the case where the dismiss button is an actual button
+
+				var button = buttons.Single(b => b.Text == itemText);
+				button.Element.Click();
+			}
 
 			App.WaitForNoElement(() => App.GetAlert());
 
