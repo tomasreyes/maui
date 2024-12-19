@@ -35,22 +35,22 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
 	private List<Tag> _allTags = [];
 
 	[ObservableProperty]
-	private string _icon = FluentUI.ribbon_24_regular;
+	private IconData _icon;
 
 	[ObservableProperty]
 	bool _isBusy;
 
 	[ObservableProperty]
-	private List<string> _icons =
-	[
-		FluentUI.ribbon_24_regular,
-		FluentUI.ribbon_star_24_regular,
-		FluentUI.trophy_24_regular,
-		FluentUI.badge_24_regular,
-		FluentUI.book_24_regular,
-		FluentUI.people_24_regular,
-		FluentUI.bot_24_regular
-	];
+	private List<IconData> _icons =	new List<IconData>
+	{
+		new IconData { Icon = FluentUI.ribbon_24_regular, Description = "Ribbon Icon" },
+		new IconData { Icon = FluentUI.ribbon_star_24_regular, Description = "Ribbon Star Icon" },
+		new IconData { Icon = FluentUI.trophy_24_regular, Description = "Trophy Icon" },
+		new IconData { Icon = FluentUI.badge_24_regular, Description = "Badge Icon" },
+		new IconData { Icon = FluentUI.book_24_regular, Description = "Book Icon" },
+		new IconData { Icon = FluentUI.people_24_regular, Description = "People Icon" },
+		new IconData { Icon = FluentUI.bot_24_regular, Description = "Bot Icon" }
+	};
 
 	public bool HasCompletedTasks
 		=> _project?.Tasks.Any(t => t.IsCompleted) ?? false;
@@ -62,7 +62,7 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
 		_categoryRepository = categoryRepository;
 		_tagRepository = tagRepository;
 		_errorHandler = errorHandler;
-
+		_icon = _icons.First();
 		Tasks = [];
 	}
 
@@ -104,6 +104,7 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
 		}
 
 		Tasks = await _taskRepository.ListAsync(_project.ID);
+		_project.Tasks = Tasks;
 	}
 
 	private async Task LoadData(int id)
@@ -124,7 +125,7 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
 			Description = _project.Description;
 			Tasks = _project.Tasks;
 
-			Icon = _project.Icon;
+			Icon.Icon = _project.Icon;
 
 			Categories = await _categoryRepository.ListAsync();
 			Category = Categories?.FirstOrDefault(c => c.ID == _project.CategoryID);
@@ -170,14 +171,17 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
 		_project.Name = Name;
 		_project.Description = Description;
 		_project.CategoryID = Category?.ID ?? 0;
-		_project.Icon = Icon;
+		_project.Icon = Icon.Icon ?? FluentUI.ribbon_24_regular;
 		await _projectRepository.SaveItemAsync(_project);
 
-		foreach (var tag in AllTags)
+		if (_project.IsNullOrNew())
 		{
-			if (tag.IsSelected)
+			foreach (var tag in AllTags)
 			{
-				await _tagRepository.SaveItemAsync(tag, _project.ID);
+				if (tag.IsSelected)
+				{
+					await _tagRepository.SaveItemAsync(tag, _project.ID);
+				}
 			}
 		}
 
